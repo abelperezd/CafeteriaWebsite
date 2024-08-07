@@ -3,7 +3,7 @@ using CafeteriaWebsite.Repositories.Interfaces;
 
 namespace CafeteriaWebsite.Repositories
 {
-	public class FoodRepository : IFood
+	public class FoodRepository : IFoodRepository
 	{
 		public List<FoodModel> GetAll()
 		{

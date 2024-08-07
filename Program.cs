@@ -1,4 +1,7 @@
 using CafeteriaWebsite.CafeteriaDbContext;
+using CafeteriaWebsite.Repositories;
+using CafeteriaWebsite.Repositories.Interfaces;
+using CafeteriaWebsite.Repositories.MockRepositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<CafeteriaDbContext>(options => options.UseSqlServer("name=CafeteriaDbContextConnection"));
+//builder.Services.AddDbContext<CafeteriaDbContext>(options => options.UseSqlServer("name=CafeteriaDbContextConnection"));
+
+builder.Services.AddTransient<IFoodRepository, MockFoodRepository>();
+builder.Services.AddTransient<ICategoryRepository, MockCategoryRepository>();
 
 var app = builder.Build();
 

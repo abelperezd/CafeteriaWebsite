@@ -5,9 +5,9 @@ using CafeteriaWebsite.Repositories.MockRepositories;
 
 namespace CafeteriaWebsite.Repositories
 {
-	public class MockFoodRepository : IFood
+	public class MockFoodRepository : IFoodRepository
 	{
-		private static readonly ICategory _categoryRepository = new MockCategoryRepository();
+		private static readonly ICategoryRepository _categoryRepository = new MockCategoryRepository();
 
 		private List<FoodModel> _food = new List<FoodModel>()
 		{

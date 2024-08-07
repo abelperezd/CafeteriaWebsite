@@ -1,0 +1,27 @@
+﻿@model CategoryDto
+
+@{
+	ViewData["Title"] = Model.Category.Name;
+}
+
+<div class="text-center">
+
+	<p>@Model.Category.Name</p>
+	<p>@Model.Category.Description</p>
+
+	<ul>
+		@foreach (var food in Model.Food)
+		{
+			<li>
+				@food.Name
+				@foreach (var item in food.TagsAsEnums)
+				{
+					<p>
+						@item
+					</p>
+				}
+			</li>
+		}
+	</ul>
+
+</div>

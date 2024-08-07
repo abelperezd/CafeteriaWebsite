@@ -2,7 +2,7 @@
 
 namespace CafeteriaWebsite.Repositories.Interfaces
 {
-	public interface IFood
+	public interface IFoodRepository
 	{
 		public List<FoodModel> GetAll();
 		public FoodModel GetById(int id);

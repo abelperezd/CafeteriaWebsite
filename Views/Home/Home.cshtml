@@ -1,8 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<CategoryModel>
+
+@{
+	ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+	<ul>
+		@foreach (CategoryModel categoryModel in Model)
+		{
+
+			<li>
+				<a class="btn btn-secondary"
+				   asp-controller="Category"
+				   asp-action="Menu"
+				   asp-route-categoryId=@categoryModel.Id> @categoryModel.Name</a>
+			</li>
+		}
+	</ul>
+
 </div>

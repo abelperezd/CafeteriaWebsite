@@ -17,7 +17,7 @@ namespace CafeteriaWebsite.Models
 		public int CategoryId { get; set; }
 		public CategoryModel Category { get; set; }
 
-		public List<FoodTag> GetTags
+		public List<FoodTag> TagsAsEnums
 		{
 			get
 			{

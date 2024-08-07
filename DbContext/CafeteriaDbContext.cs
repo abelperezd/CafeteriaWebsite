@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CafeteriaWebsite.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace CafeteriaWebsite.CafeteriaDbContext
 {
@@ -7,5 +8,7 @@ namespace CafeteriaWebsite.CafeteriaDbContext
 		public CafeteriaDbContext(DbContextOptions options) : base(options)
 		{
 		}
+
+		//DbSet<Category>
 	}
 }
