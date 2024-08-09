@@ -22,6 +22,8 @@ namespace CafeteriaWebsite.Models
 
 		public int CategoryId { get; set; }
 
+		public IFormFile? Image { get; set; }
+
 		public void InitializeTags()
 		{
 			Tags = new List<bool>();

@@ -58,6 +58,38 @@ namespace CafeteriaWebsite.Controllers
 
 			FoodModel food = new FoodModel() { Name = dto.Name , CategoryId = dto.CategoryId, Description = dto.Description, Tags = dto.TagsIntList};
 
+
+			if (dto.Image != null && dto.Image.Length > 0)
+			{
+				// Define the path to save the file
+				var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
+				// Ensure the directory exists
+				if (!Directory.Exists(uploadsFolder))
+				{
+					Directory.CreateDirectory(uploadsFolder);
+				}
+
+				// Generate a unique file name to prevent overwriting
+				var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(dto.Image.FileName);
+				var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+				// Save the file to the specified path
+				using (var stream = new FileStream(filePath, FileMode.Create))
+				{
+					await dto.Image.CopyToAsync(stream);
+				}
+
+				// Optionally, you can store the file path or name in your FoodModel or database
+				food.ImageUrl = "/uploads/" + uniqueFileName; // Adjust according to your model
+			}
+
+
+			// Your logic to save the food model
+
+			return RedirectToAction("Menu", new { categoryId = dto.CategoryId });
+
+
 			/*
 			Note note = _mapper.Map<Note>(dto);
 
@@ -79,6 +111,8 @@ D
 		}
 
 		private List<FoodTag> AllFoodTags => Enum.GetValues(typeof(FoodTag)).Cast<FoodTag>().ToList();
+
+
 	}
 }
 
