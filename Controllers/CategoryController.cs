@@ -1,6 +1,9 @@
-﻿using CafeteriaWebsite.Models;
+﻿using CafeteriaWebsite.Enums;
+using CafeteriaWebsite.Models;
 using CafeteriaWebsite.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using System;
 
 namespace CafeteriaWebsite.Controllers
 {
@@ -36,5 +39,48 @@ namespace CafeteriaWebsite.Controllers
 
 			return View(dto);
 		}
+
+		public IActionResult AddNew(int categoryId)
+		{
+			CreateFoodDto createFoodDto = new CreateFoodDto() { CategoryId = categoryId, };
+			createFoodDto.InitializeTags();
+			return View (createFoodDto);
+		}
+
+		//TODO: move this to food controller
+		[HttpPost]
+		public async Task<IActionResult> AddNew(CreateFoodDto dto)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(dto);
+			}
+
+			FoodModel food = new FoodModel() { Name = dto.Name , CategoryId = dto.CategoryId, Description = dto.Description, Tags = dto.TagsIntList};
+
+			/*
+			Note note = _mapper.Map<Note>(dto);
+
+			note.CreationDate = DateTime.Now;
+			note.UserId = _userService.GetUserId();
+
+			//check if the user already has this note
+			if (await _repositoryNotes.Exists(note.Text, note.UserId))
+			{
+				dto.NoteImportance = GetNoteImportance();
+				ModelState.AddModelError(nameof(dto.Text), $"Text {dto.Text} already exists.");
+				return View(dto);
+			}
+D
+			await _repositoryNotes.Create(note);
+			*/
+
+			return RedirectToAction("Menu", new { categoryId = dto.CategoryId });
+		}
+
+		private List<FoodTag> AllFoodTags => Enum.GetValues(typeof(FoodTag)).Cast<FoodTag>().ToList();
 	}
 }
+
+
+
