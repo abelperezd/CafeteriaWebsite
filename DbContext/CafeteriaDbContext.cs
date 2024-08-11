@@ -7,7 +7,7 @@ namespace CafeteriaWebsite.AppDbContext
 {
 	public class CafeteriaDbContext : DbContext
 	{
-		public CafeteriaDbContext(DbContextOptions options) : base(options)
+		public CafeteriaDbContext(DbContextOptions<CafeteriaDbContext> options) : base(options)
 		{
 		}
 
