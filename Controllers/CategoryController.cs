@@ -13,11 +13,13 @@ namespace CafeteriaWebsite.Controllers
 	{
 		private readonly ICategoryRepository _categoryRepository;
 		private readonly IFoodRepository _foodRepository;
+		private readonly IFoodImageRepository _foodImageRepository;
 
-		public CategoryController(ICategoryRepository categoryRepository, IFoodRepository foodRepository)
+		public CategoryController(ICategoryRepository categoryRepository, IFoodRepository foodRepository, IFoodImageRepository foodImageRepository)
 		{
 			_categoryRepository = categoryRepository;
 			_foodRepository = foodRepository;
+			_foodImageRepository = foodImageRepository;
 		}
 		public async Task<IActionResult> Menu(int categoryId)
 		{
@@ -62,7 +64,7 @@ namespace CafeteriaWebsite.Controllers
 
 			if (dto.Image != null)
 			{
-				await SaveImageInDb(dto.Image);
+				food.FoodImageId = await SaveImageInDb(dto.Image);
 			}
 
 
@@ -83,6 +85,8 @@ D
 			await _repositoryNotes.Create(note);
 			*/
 
+			await _foodRepository.Create(food);
+
 			return RedirectToAction("Menu", new
 			{
 				categoryId = dto.CategoryId
@@ -91,7 +95,7 @@ D
 
 		private List<FoodTag> AllFoodTags => Enum.GetValues(typeof(FoodTag)).Cast<FoodTag>().ToList();
 
-		private async Task SaveImageInDb(IFormFile image)
+		private async Task<int?> SaveImageInDb(IFormFile image)
 		{
 			byte[] imageData = null;
 
@@ -111,7 +115,11 @@ D
 					ImageData = imageData,
 					FileExtension = image.FileName.GetExtension()
 				};
+
+				return await _foodImageRepository.Create(imageModel);
 			}
+			return -1;
+
 		}
 
 		private async void SaveImageLocally(IFormFile image)

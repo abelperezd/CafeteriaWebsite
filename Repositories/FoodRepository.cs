@@ -39,12 +39,22 @@ namespace CafeteriaWebsite.Repositories
 
 		public async Task<List<FoodModel>> GetByCategoryId(int id)
 		{
-			return _context.Food.Where(item => item.CategoryId == id).ToList();
+			//for some reason, .Include does not work.
+			var foods =  await _context.Food.Where(item => item.CategoryId == id)/*.Include(item => item.Image)*/.ToListAsync();
+
+			foreach (var food in foods)
+			{
+				if (food.FoodImageId != null)
+					food.Image = await _context.FoodImage.FirstAsync(item => item.Id == food.FoodImageId);
+			}
+			return foods;
 		}
 
 		public async Task<FoodModel> GetById(int id)
 		{
-			return await _context.Food.SingleOrDefaultAsync(item => item.Id == id);
+			return await _context.Food
+				.Include(item => item.Image)
+				.SingleOrDefaultAsync(item => item.Id == id);
 		}
 	}
 }

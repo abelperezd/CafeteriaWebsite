@@ -9,25 +9,35 @@
 	<p>@Model.Category.Name</p>
 	<p>@Model.Category.Description</p>
 
-	<ul>
-		@foreach (var food in Model.Food)
-		{
-			<li>
-				@food.Name
-				@foreach (var item in food.TagsAsEnums)
-				{
-					<p>
-						@item
-					</p>
-				}
-			</li>
-		}
-	</ul>
+	<hr />
+	<hr />
 
-	<a class= "btn btn-secondary"
-		asp-controller = "Category"
-		asp-action = "AddNew"
-		asp-route-categoryId = "@Model.Category.Id">
+	@foreach (var food in Model.Food)
+	{
+		@food.Name
+		<p>
+			@if (food.Image != null)
+			{
+				<p> is not null</p>
+				<img src="@food.Image.ImageAsString" alt="Food Image" />
+			}
+
+
+
+			@for (var i = 0; i < food.TagsAsEnums.Count; i++)
+			{
+				@food.TagsAsEnums[i]
+				@((i < food.TagsAsEnums.Count - 1) ? ", " : "")
+			}
+		</p>
+		<hr />
+		<br />	<br />
+	}
+
+	<a class="btn btn-secondary"
+	   asp-controller="Category"
+	   asp-action="AddNew"
+	   asp-route-categoryId="@Model.Category.Id">
 		Add new
 	</a>
 

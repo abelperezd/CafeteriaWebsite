@@ -15,6 +15,12 @@ namespace CafeteriaWebsite.AppDbContext
 		public DbSet<CategoryModel> Category => Set<CategoryModel>();
 		public DbSet<FoodImageModel> FoodImage => Set<FoodImageModel>();
 
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
+			SeedData(modelBuilder);
+		}
+
 		private static void SeedData(ModelBuilder builder)
 		{
 			builder.Entity<CategoryModel>().HasData(

@@ -14,10 +14,10 @@ namespace CafeteriaWebsite.Repositories
 			_context = context;
 		}
 
-		public async Task<int> Create([Bind(new[] { "ImageData", "FileExtension" })] FoodImageModel image)
+		public async Task<int?> Create([Bind(new[] { "ImageData", "FileExtension" })] FoodImageModel image)
 		{
 			if (image.ImageData.Length < 5)
-				return -1;
+				return null;
 
 			_context.FoodImage.Add(image);
 			await _context.SaveChangesAsync();
