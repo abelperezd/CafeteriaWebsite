@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CafeteriaWebsite.dbContext.Migrations
+namespace CafeteriaWebsite.DatabaseContext.Migrations
 {
     [DbContext(typeof(CafeteriaDbContext))]
-    [Migration("20240811091235_firstMigration")]
-    partial class firstMigration
+    [Migration("20240811121053_firstMigrationFixed")]
+    partial class firstMigrationFixed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,25 @@ namespace CafeteriaWebsite.dbContext.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Description 1",
+                            Name = "Category 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Description 2",
+                            Name = "Category 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Category 3"
+                        });
                 });
 
             modelBuilder.Entity("CafeteriaWebsite.Models.FoodImageModel", b =>
@@ -83,9 +102,6 @@ namespace CafeteriaWebsite.dbContext.Migrations
                     b.Property<int?>("FoodImageId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ImageId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -97,9 +113,43 @@ namespace CafeteriaWebsite.dbContext.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("ImageId");
+                    b.HasIndex("FoodImageId")
+                        .IsUnique()
+                        .HasFilter("[FoodImageId] IS NOT NULL");
 
                     b.ToTable("Food");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Description = "Food description 1",
+                            Name = "Food1",
+                            Tags = "[2]"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            Description = "Food description 2",
+                            Name = "Food2",
+                            Tags = "[0]"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 2,
+                            Description = "Food description 3",
+                            Name = "Food3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 3,
+                            Description = "Food description 4",
+                            Name = "Food4"
+                        });
                 });
 
             modelBuilder.Entity("CafeteriaWebsite.Models.FoodModel", b =>
@@ -111,8 +161,9 @@ namespace CafeteriaWebsite.dbContext.Migrations
                         .IsRequired();
 
                     b.HasOne("CafeteriaWebsite.Models.FoodImageModel", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
+                        .WithOne()
+                        .HasForeignKey("CafeteriaWebsite.Models.FoodModel", "FoodImageId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Category");
 

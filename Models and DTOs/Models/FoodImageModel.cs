@@ -1,4 +1,5 @@
 ﻿using CafeteriaWebsite.Enums;
+using CafeteriaWebsite.Validations;
 
 namespace CafeteriaWebsite.Models
 {
@@ -9,6 +10,7 @@ namespace CafeteriaWebsite.Models
 		//binary data
 		public byte[] ImageData { get; set; }
 
+		
 		public string FileExtension { get; set; }
 
 		public string ImageAsString

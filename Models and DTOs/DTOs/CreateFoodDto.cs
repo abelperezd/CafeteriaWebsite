@@ -22,6 +22,8 @@ namespace CafeteriaWebsite.Models
 
 		public int CategoryId { get; set; }
 
+		[ImageValidFormat]
+		[ImageValidSize]
 		public IFormFile? Image { get; set; }
 
 		public void InitializeTags()

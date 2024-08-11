@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CafeteriaWebsite.dbContext.Migrations
+namespace CafeteriaWebsite.DatabaseContext.Migrations
 {
     [DbContext(typeof(CafeteriaDbContext))]
     partial class CafeteriaDbContextModelSnapshot : ModelSnapshot
@@ -99,9 +99,6 @@ namespace CafeteriaWebsite.dbContext.Migrations
                     b.Property<int?>("FoodImageId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ImageId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -113,7 +110,9 @@ namespace CafeteriaWebsite.dbContext.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("ImageId");
+                    b.HasIndex("FoodImageId")
+                        .IsUnique()
+                        .HasFilter("[FoodImageId] IS NOT NULL");
 
                     b.ToTable("Food");
 
@@ -159,8 +158,9 @@ namespace CafeteriaWebsite.dbContext.Migrations
                         .IsRequired();
 
                     b.HasOne("CafeteriaWebsite.Models.FoodImageModel", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
+                        .WithOne()
+                        .HasForeignKey("CafeteriaWebsite.Models.FoodModel", "FoodImageId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Category");
 

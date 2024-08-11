@@ -2,6 +2,7 @@
 using CafeteriaWebsite.Models;
 using CafeteriaWebsite.Repositories.Interfaces;
 using CafeteriaWebsite.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -19,6 +20,30 @@ namespace CafeteriaWebsite.Controllers
 			_foodRepository = foodRepository;
 			_foodImageRepository = foodImageRepository;
 		}
+
+		#region Remove
+
+
+		[HttpPost]
+		public async Task<IActionResult> DeleteFromToast(int id)
+		{
+			FoodModel food = await _foodRepository.GetById(id);
+
+			if (food == null)
+			{
+				return BadRequest("Not authorised");
+			}
+
+			//for now, avoid removing it from the database
+			await _foodRepository.Delete(id);
+
+			return Ok();
+		}
+
+		#endregion
+
+		#region Add
+
 
 		public async Task<IActionResult> AddNew(int categoryId)
 		{
@@ -103,6 +128,8 @@ namespace CafeteriaWebsite.Controllers
 				}
 			}
 		}
+
+		#endregion
 
 	}
 }

@@ -2,10 +2,12 @@
 
 #nullable disable
 
-namespace CafeteriaWebsite.dbContext.Migrations
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace CafeteriaWebsite.DatabaseContext.Migrations
 {
     /// <inheritdoc />
-    public partial class firstMigration : Migration
+    public partial class firstMigrationFixed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,8 +50,7 @@ namespace CafeteriaWebsite.dbContext.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Tags = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FoodImageId = table.Column<int>(type: "int", nullable: true),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    ImageId = table.Column<int>(type: "int", nullable: true)
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,10 +62,32 @@ namespace CafeteriaWebsite.dbContext.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Food_FoodImage_ImageId",
-                        column: x => x.ImageId,
+                        name: "FK_Food_FoodImage_FoodImageId",
+                        column: x => x.FoodImageId,
                         principalTable: "FoodImage",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Category",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Description 1", "Category 1" },
+                    { 2, "Description 2", "Category 2" },
+                    { 3, null, "Category 3" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Food",
+                columns: new[] { "Id", "CategoryId", "Description", "FoodImageId", "Name", "Tags" },
+                values: new object[,]
+                {
+                    { 1, 1, "Food description 1", null, "Food1", "[2]" },
+                    { 2, 2, "Food description 2", null, "Food2", "[0]" },
+                    { 3, 2, "Food description 3", null, "Food3", null },
+                    { 4, 3, "Food description 4", null, "Food4", null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -73,9 +96,11 @@ namespace CafeteriaWebsite.dbContext.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Food_ImageId",
+                name: "IX_Food_FoodImageId",
                 table: "Food",
-                column: "ImageId");
+                column: "FoodImageId",
+                unique: true,
+                filter: "[FoodImageId] IS NOT NULL");
         }
 
         /// <inheritdoc />

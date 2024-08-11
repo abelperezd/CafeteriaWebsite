@@ -1,6 +1,5 @@
 ﻿using CafeteriaWebsite.Enums;
 using CafeteriaWebsite.Models;
-using CafeteriaWebsite.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace CafeteriaWebsite.AppDbContext
@@ -17,7 +16,15 @@ namespace CafeteriaWebsite.AppDbContext
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			// Configure the one-to-one between food and foodImage
+			modelBuilder.Entity<FoodModel>()
+				.HasOne(f => f.Image) // FoodModel has one FoodImageModel
+				.WithOne() // FoodImageModel does not have a navigation property back to FoodModel
+				.HasForeignKey<FoodModel>(f => f.FoodImageId) // Foreign key in FoodModel
+				.OnDelete(DeleteBehavior.Cascade); // Configure cascading delete
+
 			base.OnModelCreating(modelBuilder);
+
 			SeedData(modelBuilder);
 		}
 

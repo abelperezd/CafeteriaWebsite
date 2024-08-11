@@ -4,7 +4,29 @@
 	ViewData["Title"] = Model.Category.Name;
 }
 
+<!-- Delete modal -->
+<div class="modal fade" id="toastRemove" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">The following item will be removed:</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-danger" id="toastRemoveButton">Remove</button>
+			</div>
+
+			<input type="hidden" id="idToRemove" />
+
+		</div>
+	</div>
+</div>
+
 <div class="text-center">
+
 
 	<p>@Model.Category.Name</p>
 	<p>@Model.Category.Description</p>
@@ -14,24 +36,32 @@
 
 	@foreach (var food in Model.Food)
 	{
-		@food.Name
-		<p>
+		<div id="@food.Id">
+
+			<p id="text-@food.Id">
+				@food.Name
+			</p>
+
 			@if (food.Image != null)
 			{
 				<p> is not null</p>
 				<img src="@food.Image.ImageAsString" alt="Food Image" />
 			}
 
-
-
 			@for (var i = 0; i < food.TagsAsEnums.Count; i++)
 			{
 				@food.TagsAsEnums[i]
 				@((i < food.TagsAsEnums.Count - 1) ? ", " : "")
 			}
-		</p>
-		<hr />
-		<br />	<br />
+
+			<a id="deleteBtn-@food.Id" class="btn btn-danger deleteButton">
+				<i class="bi-trash-fill"></i>
+			</a>
+
+			<hr />
+			<br />	<br />
+
+		</div>
 	}
 
 	<a class="btn btn-secondary"
@@ -42,3 +72,56 @@
 	</a>
 
 </div>
+
+@section Scripts {
+
+	<script>
+
+		function getFoodId(button) {
+			//previous implementation
+			//return button.closest('tr').find('.id').val(); // Retrieve the note ID from the closest row to the button
+			return button.attr("id").split('-')[1];
+		}
+
+		$(function () {
+			$(".deleteButton").on('click', function (e) {
+				e.preventDefault();
+
+				const button = $(this);
+				const toast = $("#toastRemove");
+
+				toast.modal('show');
+
+				const id = getFoodId(button);
+				toast.find(".modal-body").text($("#text-" + id).text());
+				toast.find("#idToRemove").val(id)
+			});
+		})
+
+		$(function () {
+			$("#toastRemoveButton").on('click', function (e) {
+
+				e.preventDefault();
+
+				const toast = $("#toastRemove");
+				const foodId = toast.find("#idToRemove").val()
+
+				$.ajax({
+					url: '@Url.Action("DeleteFromToast", "Food")',
+					type: 'POST',
+					data: { id: foodId },
+					success: function (response, status, jqxhr) {
+						console.log("Food removed: ", response)
+						$('#' + foodId).remove();
+					},
+					error: function (jqxhr, status, error) {
+						console.log("Error removing note: ", error);
+					},
+					complete: function () {
+						toast.modal('hide');
+					}
+				});
+			});
+		})
+	</script>
+}

@@ -4,7 +4,7 @@
 	{
 		public static string GetExtension(this string original)
 		{
-			return Path.GetExtension(original);
+			return Path.GetExtension(original).TrimStart('.');
 		}
 	}
 }

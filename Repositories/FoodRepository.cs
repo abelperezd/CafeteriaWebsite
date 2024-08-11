@@ -9,9 +9,11 @@ namespace CafeteriaWebsite.Repositories
 	public class FoodRepository : IFoodRepository
 	{
 		private readonly CafeteriaDbContext _context;
+		private readonly IFoodImageRepository _foodImageRepository;
 
-		public FoodRepository(CafeteriaDbContext context) {
+		public FoodRepository(CafeteriaDbContext context, IFoodImageRepository foodImageRepository) {
 			_context = context;
+			_foodImageRepository = foodImageRepository;
 		}
 		public async Task<int> Create([Bind(new[] { "Name", "CategoryId" })] FoodModel food)
 		{
@@ -32,6 +34,13 @@ namespace CafeteriaWebsite.Repositories
 			if (dbFood != null)
 			{
 				_context.Food.Remove(dbFood);
+
+				//for some reason it is not automatically removed
+				if(dbFood.FoodImageId != null)
+				{
+					await _foodImageRepository.Delete((int)dbFood.FoodImageId);
+				}
+
 				await _context.SaveChangesAsync();
 			}
 
@@ -45,7 +54,7 @@ namespace CafeteriaWebsite.Repositories
 			foreach (var food in foods)
 			{
 				if (food.FoodImageId != null)
-					food.Image = await _context.FoodImage.FirstAsync(item => item.Id == food.FoodImageId);
+					food.Image = await _foodImageRepository.GetById((int)food.FoodImageId);
 			}
 			return foods;
 		}
