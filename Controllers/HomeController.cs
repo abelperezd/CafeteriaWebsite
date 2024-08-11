@@ -16,9 +16,9 @@ namespace CafeteriaWebsite.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
-            return View(_categoryRepository.GetAll());
+            return View(await _categoryRepository.GetAll());
         }
 
 

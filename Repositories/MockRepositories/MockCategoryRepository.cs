@@ -1,5 +1,6 @@
 ﻿using CafeteriaWebsite.Models;
 using CafeteriaWebsite.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CafeteriaWebsite.Repositories.MockRepositories
 {
@@ -27,12 +28,28 @@ namespace CafeteriaWebsite.Repositories.MockRepositories
 			}
 		};
 
-		public List<CategoryModel> GetAll()
+		public Task<int> Create([Bind(new[] { "Name" })] CategoryModel category)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task Delete(int id)
+		{
+			throw new NotImplementedException();
+		}
+
+
+		public async Task<List<CategoryModel>> GetAll()
 		{
 			return _categories;
 		}
 
-		public CategoryModel GetById(int id)
+		public async Task<CategoryModel> GetById(int id)
+		{
+			return _categories.Find(item => item.Id == id);
+		}
+
+		public CategoryModel GetByIdNotAsync(int id)
 		{
 			return _categories.Find(item => item.Id == id);
 		}

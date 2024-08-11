@@ -2,6 +2,7 @@
 using CafeteriaWebsite.Models;
 using CafeteriaWebsite.Repositories.Interfaces;
 using CafeteriaWebsite.Repositories.MockRepositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CafeteriaWebsite.Repositories
 {
@@ -13,23 +14,23 @@ namespace CafeteriaWebsite.Repositories
 		{
 			new FoodModel
 			{
-				Id = 1, Name = "Food1", Description = "Food description 1", ImageUrl = null,
-				CategoryId = 1, Category = _categoryRepository.GetById(1), Tags = new List<int>{(int)FoodTag.VegetarianOption }
+				Id = 1, Name = "Food1", Description = "Food description 1", FoodImageId = null,
+				CategoryId = 1, Category = _categoryRepository.GetByIdNotAsync(1), Tags = new List<int>{(int)FoodTag.VegetarianOption }
 			},
 			new FoodModel
 			{
-				Id = 2, Name = "Food2", Description = "Food description 2", ImageUrl = null,
-				CategoryId = 2, Category = _categoryRepository.GetById(2), Tags = new List<int>{(int)FoodTag.New }
+				Id = 2, Name = "Food2", Description = "Food description 2", FoodImageId = null,
+				CategoryId = 2, Category = _categoryRepository.GetByIdNotAsync(2), Tags = new List<int>{(int)FoodTag.New }
 			},
 			new FoodModel
 			{
-				Id = 3, Name = "Food3", Description = "Food description 3", ImageUrl = null,
-				CategoryId = 2, Category = _categoryRepository.GetById(2), Tags = null
+				Id = 3, Name = "Food3", Description = "Food description 3", FoodImageId = null,
+				CategoryId = 2, Category = _categoryRepository.GetByIdNotAsync(2), Tags = null
 			},
 			new FoodModel
 			{
-				Id = 4, Name = "Food4", Description = "Food description 4", ImageUrl = null,
-				CategoryId = 3, Category = _categoryRepository.GetById(3), Tags = null
+				Id = 4, Name = "Food4", Description = "Food description 4", FoodImageId = null,
+				CategoryId = 3, Category = _categoryRepository.GetByIdNotAsync(3), Tags = null
 			}
 		};
 
@@ -38,15 +39,24 @@ namespace CafeteriaWebsite.Repositories
 			return _food;
 		}
 
-		public FoodModel GetById(int id)
+		public Task<int> Create([Bind(new[] { "Name", "CategoryId" })] FoodModel category)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task Delete(int id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public async Task<FoodModel> GetById(int id)
 		{
 			return _food.Find(item => item.Id == id);
 		}
 
-		public List<FoodModel> GetByCategoryId(int id)
+		public async Task<List<FoodModel>> GetByCategoryId(int id)
 		{
 			return _food.Where(item => item.CategoryId == id).ToList();
 		}
-		
 	}
 }

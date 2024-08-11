@@ -10,12 +10,16 @@ namespace CafeteriaWebsite.Models
 
 		public string? Description { get; set; }
 
-		public string? ImageUrl { get; set; }
 
 		public List<int>? Tags { get; set; }
 
+		public int? FoodImageId { get; set; }
+
 		public int CategoryId { get; set; }
-		public CategoryModel Category { get; set; }
+		public CategoryModel? Category { get; set; }
+		public FoodImageModel? Image { get; set; }
+
+
 
 		public List<FoodTag> TagsAsEnums
 		{

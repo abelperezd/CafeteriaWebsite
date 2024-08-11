@@ -1,9 +1,11 @@
 ﻿using CafeteriaWebsite.Enums;
 using CafeteriaWebsite.Models;
 using CafeteriaWebsite.Repositories.Interfaces;
+using CafeteriaWebsite.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CafeteriaWebsite.Controllers
 {
@@ -17,19 +19,19 @@ namespace CafeteriaWebsite.Controllers
 			_categoryRepository = categoryRepository;
 			_foodRepository = foodRepository;
 		}
-		public IActionResult Menu(int categoryId)
+		public async Task<IActionResult> Menu(int categoryId)
 		{
-			CategoryModel category = _categoryRepository.GetById(categoryId);
+			CategoryModel category = await _categoryRepository.GetById(categoryId);
 
-			if(category == null)
+			if (category == null)
 			{
 				//TODO: show not found error
-				
+
 			}
 
-			List<FoodModel> food = _foodRepository.GetByCategoryId(categoryId);
-			
-			if(food.Count == 0)
+			List<FoodModel> food = await _foodRepository.GetByCategoryId(categoryId);
+
+			if (food.Count == 0)
 			{
 				//TODO: show not found error
 
@@ -40,11 +42,11 @@ namespace CafeteriaWebsite.Controllers
 			return View(dto);
 		}
 
-		public IActionResult AddNew(int categoryId)
+		public async Task<IActionResult> AddNew(int categoryId)
 		{
 			CreateFoodDto createFoodDto = new CreateFoodDto() { CategoryId = categoryId, };
 			createFoodDto.InitializeTags();
-			return View (createFoodDto);
+			return View(createFoodDto);
 		}
 
 		//TODO: move this to food controller
@@ -56,38 +58,12 @@ namespace CafeteriaWebsite.Controllers
 				return View(dto);
 			}
 
-			FoodModel food = new FoodModel() { Name = dto.Name , CategoryId = dto.CategoryId, Description = dto.Description, Tags = dto.TagsIntList};
+			FoodModel food = new FoodModel() { Name = dto.Name, CategoryId = dto.CategoryId, Description = dto.Description, Tags = dto.TagsIntList };
 
-
-			if (dto.Image != null && dto.Image.Length > 0)
+			if (dto.Image != null)
 			{
-				// Define the path to save the file
-				var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-
-				// Ensure the directory exists
-				if (!Directory.Exists(uploadsFolder))
-				{
-					Directory.CreateDirectory(uploadsFolder);
-				}
-
-				// Generate a unique file name to prevent overwriting
-				var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(dto.Image.FileName);
-				var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-				// Save the file to the specified path
-				using (var stream = new FileStream(filePath, FileMode.Create))
-				{
-					await dto.Image.CopyToAsync(stream);
-				}
-
-				// Optionally, you can store the file path or name in your FoodModel or database
-				food.ImageUrl = "/uploads/" + uniqueFileName; // Adjust according to your model
+				await SaveImageInDb(dto.Image);
 			}
-
-
-			// Your logic to save the food model
-
-			return RedirectToAction("Menu", new { categoryId = dto.CategoryId });
 
 
 			/*
@@ -107,11 +83,61 @@ D
 			await _repositoryNotes.Create(note);
 			*/
 
-			return RedirectToAction("Menu", new { categoryId = dto.CategoryId });
+			return RedirectToAction("Menu", new
+			{
+				categoryId = dto.CategoryId
+			});
 		}
 
 		private List<FoodTag> AllFoodTags => Enum.GetValues(typeof(FoodTag)).Cast<FoodTag>().ToList();
 
+		private async Task SaveImageInDb(IFormFile image)
+		{
+			byte[] imageData = null;
+
+			if (image.Length > 0)
+			{
+				using (var ms = new MemoryStream())
+				{
+					await image.CopyToAsync(ms);
+					imageData = ms.ToArray();
+				}
+			}
+
+			if (imageData != null)
+			{
+				FoodImageModel imageModel = new FoodImageModel()
+				{
+					ImageData = imageData,
+					FileExtension = image.FileName.GetExtension()
+				};
+			}
+		}
+
+		private async void SaveImageLocally(IFormFile image)
+		{
+			if (image != null && image.Length > 0)
+			{
+				// Define the path to save the file
+				var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
+				// Ensure the directory exists
+				if (!Directory.Exists(uploadsFolder))
+				{
+					Directory.CreateDirectory(uploadsFolder);
+				}
+
+				// Generate a unique file name to prevent overwriting
+				var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+				var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+				// Save the file to the specified path
+				using (var stream = new FileStream(filePath, FileMode.Create))
+				{
+					await image.CopyToAsync(stream);
+				}
+			}
+		}
 
 	}
 }
