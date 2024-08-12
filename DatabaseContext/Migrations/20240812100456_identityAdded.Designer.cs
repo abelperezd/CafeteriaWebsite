@@ -4,6 +4,7 @@ using CafeteriaWebsite.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CafeteriaWebsite.DatabaseContext.Migrations
 {
     [DbContext(typeof(CafeteriaDbContext))]
-    partial class CafeteriaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240812100456_identityAdded")]
+    partial class identityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +42,7 @@ namespace CafeteriaWebsite.DatabaseContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Category");
 
                     b.HasData(
                         new
@@ -79,7 +82,7 @@ namespace CafeteriaWebsite.DatabaseContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FoodImage", (string)null);
+                    b.ToTable("FoodImage");
                 });
 
             modelBuilder.Entity("CafeteriaWebsite.Models.FoodModel", b =>
@@ -114,7 +117,7 @@ namespace CafeteriaWebsite.DatabaseContext.Migrations
                         .IsUnique()
                         .HasFilter("[FoodImageId] IS NOT NULL");
 
-                    b.ToTable("Food", (string)null);
+                    b.ToTable("Food");
 
                     b.HasData(
                         new

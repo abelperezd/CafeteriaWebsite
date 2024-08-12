@@ -5,6 +5,7 @@
 
 #Custom
 Steps.txt
+Credentials.txt
 
 # User-specific files
 *.suo

@@ -3,6 +3,7 @@ using CafeteriaWebsite.Models;
 using CafeteriaWebsite.Repositories.Interfaces;
 using CafeteriaWebsite.Utils;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -47,6 +48,7 @@ namespace CafeteriaWebsite.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> DeleteFromToast(int id)
 		{
 			CategoryModel cat = await _categoryRepository.GetById(id);
@@ -70,6 +72,7 @@ namespace CafeteriaWebsite.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> AddNew(CreateCategoryDto dto)
 		{
 			if (!ModelState.IsValid)
@@ -103,6 +106,7 @@ namespace CafeteriaWebsite.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public async Task<ActionResult> Update(UpdateCategoryDto dto)
 		{
 			bool exists = await _categoryRepository.GetById(dto.Id) != null;

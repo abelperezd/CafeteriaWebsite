@@ -25,6 +25,7 @@ namespace CafeteriaWebsite.Controllers
 
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> DeleteFromToast(int id)
 		{
 			FoodModel food = await _foodRepository.GetById(id);
@@ -53,6 +54,7 @@ namespace CafeteriaWebsite.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> AddNew(CreateFoodDto dto)
 		{
 			if (!ModelState.IsValid)

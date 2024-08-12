@@ -87,9 +87,13 @@
 				</a>
 			}
 
-			<a id="deleteBtn-@food.Id" class="btn btn-danger deleteButton">
-				<i class="bi-trash-fill"></i>
-			</a>
+
+			@if (User.Identity.IsAuthenticated)
+			{
+				<a id="deleteBtn-@food.Id" class="btn btn-danger deleteButton">
+					<i class="bi-trash-fill"></i>
+				</a>
+			}
 
 			<hr />
 			<br />	<br />
@@ -97,12 +101,15 @@
 		</div>
 	}
 
-	<a class="btn btn-secondary"
-	   asp-controller="Food"
-	   asp-action="AddNew"
-	   asp-route-categoryId="@Model.Category.Id">
-		Add new
-	</a>
+	@if (User.Identity.IsAuthenticated)
+	{
+		<a class="btn btn-secondary"
+		   asp-controller="Food"
+		   asp-action="AddNew"
+		   asp-route-categoryId="@Model.Category.Id">
+			Add new
+		</a>
+	}
 
 </div>
 
@@ -184,7 +191,7 @@
 				}
 
 				//toast.find(".modal-body").text($("#text-" + id).text());
-				
+
 			});
 		})
 

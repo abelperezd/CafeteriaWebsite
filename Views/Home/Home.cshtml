@@ -35,21 +35,27 @@
 				   asp-controller="Category"
 				   asp-action="Menu"
 				   asp-route-categoryId=@categoryModel.Id> @categoryModel.Name</a>
-				<a id="deleteBtn-@categoryModel.Id" class="btn btn-danger deleteButton">
-					<i class="bi-trash-fill"></i>
-				</a>
-				<a id="editBtn-@categoryModel.Id" class="btn btn-primary" asp-action="Update" asp-controller="Category" asp-route-id="@categoryModel.Id">
-					<i class="bi-pencil-fill"></i>
-				</a>
-
+				@if (User.Identity.IsAuthenticated)
+				{
+					<a id="deleteBtn-@categoryModel.Id" class="btn btn-danger deleteButton">
+						<i class="bi-trash-fill"></i>
+					</a>
+					<a id="editBtn-@categoryModel.Id" class="btn btn-primary" asp-action="Update" asp-controller="Category" asp-route-id="@categoryModel.Id">
+						<i class="bi-pencil-fill"></i>
+					</a>
+				}
 			</li>
 		}
 	</ul>
-	<a class="btn btn-secondary"
-	   asp-controller="Category"
-	   asp-action="AddNew">
-		Add new
-	</a>
+
+	@if (User.Identity.IsAuthenticated)
+	{
+		<a class="btn btn-secondary"
+		   asp-controller="Category"
+		   asp-action="AddNew">
+			Add new
+		</a>
+	}
 
 </div>
 

@@ -1,10 +1,11 @@
 ﻿using CafeteriaWebsite.Enums;
 using CafeteriaWebsite.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CafeteriaWebsite.AppDbContext
 {
-	public class CafeteriaDbContext : DbContext
+	public class CafeteriaDbContext : IdentityDbContext
 	{
 		public CafeteriaDbContext(DbContextOptions<CafeteriaDbContext> options) : base(options)
 		{
@@ -29,6 +30,11 @@ namespace CafeteriaWebsite.AppDbContext
 		}
 
 		private static void SeedData(ModelBuilder builder)
+		{
+			SeedCafeteriaData(builder);
+		}
+
+		private static void SeedCafeteriaData(ModelBuilder builder)
 		{
 			builder.Entity<CategoryModel>().HasData(
 				new CategoryModel()
@@ -90,5 +96,6 @@ namespace CafeteriaWebsite.AppDbContext
 				}
 			);
 		}
+
 	}
 }
