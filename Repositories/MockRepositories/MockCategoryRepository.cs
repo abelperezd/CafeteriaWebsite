@@ -53,5 +53,10 @@ namespace CafeteriaWebsite.Repositories.MockRepositories
 		{
 			return _categories.Find(item => item.Id == id);
 		}
+
+		public Task Update(UpdateCategoryDto dto)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

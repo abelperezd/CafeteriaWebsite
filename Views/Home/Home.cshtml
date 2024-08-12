@@ -38,6 +38,9 @@
 				<a id="deleteBtn-@categoryModel.Id" class="btn btn-danger deleteButton">
 					<i class="bi-trash-fill"></i>
 				</a>
+				<a id="editBtn-@categoryModel.Id" class="btn btn-primary" asp-action="Update" asp-controller="Category" asp-route-id="@categoryModel.Id">
+					<i class="bi-pencil-fill"></i>
+				</a>
 
 			</li>
 		}

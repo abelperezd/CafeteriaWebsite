@@ -10,7 +10,8 @@ namespace CafeteriaWebsite.Repositories
 	{
 		private readonly CafeteriaDbContext _context;
 
-		public CategoryRepository(CafeteriaDbContext context) {
+		public CategoryRepository(CafeteriaDbContext context)
+		{
 			_context = context;
 		}
 
@@ -51,6 +52,18 @@ namespace CafeteriaWebsite.Repositories
 		public CategoryModel GetByIdNotAsync(int id)
 		{
 			return null;
+		}
+
+		public async Task Update(UpdateCategoryDto dto)
+		{
+			var dbNote = _context.Category.Single(n => n.Id == dto.Id);
+			dbNote.Name = dto.Name;
+			dbNote.Description = dto.Description;
+
+			//alternative method
+			//_context.Database.ExecuteSql($"UPDATE [Note] SET [Text] = {note.Text} WHERE [Id] = {note.Id}");
+
+			await _context.SaveChangesAsync();
 		}
 	}
 }

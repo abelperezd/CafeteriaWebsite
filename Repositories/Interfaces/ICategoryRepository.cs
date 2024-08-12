@@ -10,5 +10,6 @@ namespace CafeteriaWebsite.Repositories.Interfaces
 		public Task<List<CategoryModel>> GetAll();
 		public Task<CategoryModel> GetById(int id);
 		public CategoryModel GetByIdNotAsync(int id);
+		public Task Update(UpdateCategoryDto dto);
 	}
 }

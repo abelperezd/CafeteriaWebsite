@@ -2,6 +2,7 @@
 using CafeteriaWebsite.Models;
 using CafeteriaWebsite.Repositories.Interfaces;
 using CafeteriaWebsite.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -85,6 +86,35 @@ namespace CafeteriaWebsite.Controllers
 			{
 				categoryId
 			});
+		}
+
+		[HttpGet]
+		public async Task<ActionResult> Update(int id)
+		{
+			CategoryModel model = await _categoryRepository.GetById(id);
+
+			if (model == null)
+			{
+				return RedirectToAction(Constants.NOT_FOUND_REDIRECT, "Home");
+			}
+
+			UpdateCategoryDto dto = new UpdateCategoryDto(model.Id, model.Name, model.Description);
+			return View(dto);
+		}
+
+		[HttpPost]
+		public async Task<ActionResult> Update(UpdateCategoryDto dto)
+		{
+			bool exists = await _categoryRepository.GetById(dto.Id) != null;
+
+			if (!exists)
+			{
+				return RedirectToAction(Constants.NOT_FOUND_REDIRECT, "Home");
+			}
+
+			await _categoryRepository.Update(dto);
+
+			return RedirectToAction("Home","Home");
 		}
 
 	}
