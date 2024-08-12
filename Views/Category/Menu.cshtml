@@ -25,6 +25,28 @@
 	</div>
 </div>
 
+<!-- Info modal -->
+<div class="modal fade" id="toastInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="infoTitle"></h1>
+
+				<img id="infoImage" src="" alt="Food Image" />
+
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<h5 class="modal-body" id="infoDescription"></h5>
+			<div class="modal-footer">
+				@* TODO: display the tags *@
+			</div>
+
+			<input type="hidden" id="idToRemove" />
+
+		</div>
+	</div>
+</div>
+
 <div class="text-center">
 
 
@@ -42,16 +64,27 @@
 				@food.Name
 			</p>
 
+			<p id="description-@food.Id" style="display: none;">
+				@food.Description
+			</p>
+
 			@if (food.Image != null)
 			{
 				<p> is not null</p>
-				<img src="@food.Image.ImageAsString" alt="Food Image" />
+				<img id="img-@food.Id" src="@food.Image.ImageAsString" alt="Food Image" />
 			}
 
 			@for (var i = 0; i < food.TagsAsEnums.Count; i++)
 			{
 				@food.TagsAsEnums[i]
 				@((i < food.TagsAsEnums.Count - 1) ? ", " : "")
+			}
+
+			@if (!string.IsNullOrEmpty(food.Description))
+			{
+				<a id="infoBtn-@food.Id" class="btn btn-secondary infoButton">
+					<i class="bi-info-lg"></i>
+				</a>
 			}
 
 			<a id="deleteBtn-@food.Id" class="btn btn-danger deleteButton">
@@ -83,6 +116,8 @@
 			return button.attr("id").split('-')[1];
 		}
 
+		//Delete
+
 		$(function () {
 			$(".deleteButton").on('click', function (e) {
 				e.preventDefault();
@@ -94,7 +129,6 @@
 
 				const id = getFoodId(button);
 				toast.find(".modal-body").text($("#text-" + id).text());
-				toast.find("#idToRemove").val(id)
 			});
 		})
 
@@ -123,5 +157,35 @@
 				});
 			});
 		})
+
+		//Info
+		$(function () {
+			$(".infoButton").on('click', function (e) {
+				e.preventDefault();
+
+				const button = $(this);
+				const toast = $("#toastInfo");
+
+				toast.modal('show');
+
+				const id = getFoodId(button);
+				toast.find("#infoTitle").text($("#text-" + id).text());
+				toast.find("#infoDescription").text($("#description-" + id).text());
+
+				//Display image
+				//const imageSrc = $("#img-" + id).attr("src");
+				//toast.find("#infoImage").attr("src", imageSrc);
+				const imageElement = $("#img-" + id);
+				if (imageElement.length && imageElement.attr("src")) {
+					toast.find("#infoImage").attr("src", imageElement.attr("src")).show();
+				} else {
+					toast.find("#infoImage").hide(); // Hide the image element if no image is available
+				}
+
+				//toast.find(".modal-body").text($("#text-" + id).text());
+				toast.find("#idToRemove").val(id)
+			});
+		})
+
 	</script>
 }
