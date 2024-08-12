@@ -44,6 +44,49 @@ namespace CafeteriaWebsite.Controllers
 
 			return View(dto);
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> DeleteFromToast(int id)
+		{
+			CategoryModel cat = await _categoryRepository.GetById(id);
+
+			if (cat == null)
+			{
+				return BadRequest("Not authorised");
+			}
+
+			//for now, avoid removing it from the database
+			await _categoryRepository.Delete(id);
+
+			return Ok();
+		}
+
+		public async Task<IActionResult> AddNew()
+		{
+			//CreateFoodDto createFoodDto = new CreateFoodDto() { CategoryId = categoryId, };
+			//return View(createFoodDto);
+			return View(new CreateCategoryDto());
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> AddNew(CreateCategoryDto dto)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(dto);
+			}
+
+			CategoryModel model = new CategoryModel() { Name = dto.Name, Description = dto.Description };
+
+
+			int categoryId = await _categoryRepository.Create(model);
+
+			return RedirectToAction("Menu", new
+			{
+				categoryId
+			});
+		}
+
 	}
 }
 

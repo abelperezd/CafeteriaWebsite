@@ -129,6 +129,7 @@
 
 				const id = getFoodId(button);
 				toast.find(".modal-body").text($("#text-" + id).text());
+				toast.find("#idToRemove").val(id)
 			});
 		})
 
@@ -183,7 +184,7 @@
 				}
 
 				//toast.find(".modal-body").text($("#text-" + id).text());
-				toast.find("#idToRemove").val(id)
+				
 			});
 		})
 

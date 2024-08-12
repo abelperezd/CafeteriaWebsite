@@ -1,0 +1,49 @@
+﻿@using CafeteriaWebsite.Enums
+@model CreateCategoryDto
+
+@{
+	ViewData["Title"] = "Add New";
+}
+
+<div class="text-center">
+
+	<h1>Create new note</h1>
+	<hr />
+
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+	<form asp-controller="Category" asp-action="AddNew">
+		<div class="mb-3">
+			<label asp-for="Name" class="form-label"></label>
+			<input type="text" asp-for="Name" name="Name" class="form-control" />
+			<span asp-validation-for="Name" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="Description" class="form-label"></label>
+			<input type="text" asp-for="Description" name="Description" class="form-control" />
+			<span asp-validation-for="Description" class="text-danger"></span>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Add</button>
+
+	</form>
+
+
+
+	@* Not needed for now, but we would if other type of validations were needed, such as credit cards*@
+	@section Scripts {
+		<partial name="_ValidationScriptsPartial" />
+	}
+
+	<script type="text/javascript">
+		function fileCheck(obj) {
+			var fileExtension = ['jpeg', 'jpg', 'png'];
+			if ($.inArray($(obj).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+				alert("Only '.jpeg','.jpg', '.png' formats are allowed.");
+				$(obj).val('');
+			}
+		}
+	</script>
+
+</div>
