@@ -15,7 +15,7 @@ namespace CafeteriaWebsite.Repositories
 			new FoodModel
 			{
 				Id = 1, Name = "Food1", Description = "Food description 1", FoodImageId = null,
-				CategoryId = 1, Category = _categoryRepository.GetByIdNotAsync(1), Tags = new List<int>{(int)FoodTag.VegetarianOption }
+				CategoryId = 1, Category = _categoryRepository.GetByIdNotAsync(1), Tags = new List<int>{(int)FoodTag.Vegan }
 			},
 			new FoodModel
 			{

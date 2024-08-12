@@ -56,50 +56,71 @@
 	<hr />
 	<hr />
 
-	@foreach (var food in Model.Food)
-	{
-		<div id="@food.Id">
-
-			<p id="text-@food.Id">
-				@food.Name
-			</p>
-
-			<p id="description-@food.Id" style="display: none;">
-				@food.Description
-			</p>
-
-			@if (food.Image != null)
-			{
-				<p> is not null</p>
-				<img id="img-@food.Id" src="@food.Image.ImageAsString" alt="Food Image" />
-			}
-
-			@for (var i = 0; i < food.TagsAsEnums.Count; i++)
-			{
-				@food.TagsAsEnums[i]
-				@((i < food.TagsAsEnums.Count - 1) ? ", " : "")
-			}
-
-			@if (!string.IsNullOrEmpty(food.Description))
-			{
-				<a id="infoBtn-@food.Id" class="btn btn-secondary infoButton">
-					<i class="bi-info-lg"></i>
-				</a>
-			}
 
 
-			@if (User.Identity.IsAuthenticated)
-			{
-				<a id="deleteBtn-@food.Id" class="btn btn-danger deleteButton">
-					<i class="bi-trash-fill"></i>
-				</a>
-			}
 
-			<hr />
-			<br />	<br />
+	<div class="row row-cols-1 g-4">
+		@foreach (var food in Model.Food)
+		{
+			<div class="col" id="@food.Id">
+				<div class="card mb-3" style="max-width: 540px;">
+					<div class="row g-0">
 
-		</div>
-	}
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title" id="text-@food.Id">
+									@food.Name
+
+									@if (!string.IsNullOrEmpty(food.Description))
+									{
+										<p id="description-@food.Id" style="display: none;">
+											@food.Description
+										</p>
+
+										<a id="infoBtn-@food.Id" class="btn btn-secondary infoButton">
+											<i class="bi-info-lg"></i>
+										</a>
+									}
+
+								</h5>
+								<div class="card-text">
+
+									<p>
+
+										@for (var i = 0; i < food.TagsAsEnums.Count; i++)
+										{
+											<span class=" badge rounded-pill bg-primary">@food.TagsAsEnums[i]</span>
+										}
+									</p>
+
+
+									
+								</div>
+								<p class="card-text">
+									<small class="text-body-secondary">
+										@if (User.Identity.IsAuthenticated)
+										{
+											<a id="deleteBtn-@food.Id" class="btn btn-danger deleteButton">
+												<i class="bi-trash-fill"></i>
+											</a>
+										}
+									</small>
+								</p>
+							</div>
+						</div>
+						<div class="col-md-4">
+
+							@if (food.Image != null)
+							{
+								<img id="img-@food.Id" class="img-fluid rounded-end" src="@food.Image.ImageAsString" alt="Food Image">
+							}
+
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
 
 	@if (User.Identity.IsAuthenticated)
 	{
@@ -107,7 +128,7 @@
 		   asp-controller="Food"
 		   asp-action="AddNew"
 		   asp-route-categoryId="@Model.Category.Id">
-			Add new
+			<i class="bi-plus-circle-dotted"></i>
 		</a>
 	}
 

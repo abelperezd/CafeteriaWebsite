@@ -65,7 +65,7 @@ namespace CafeteriaWebsite.AppDbContext
 					Description = "Food description 1",
 					FoodImageId = null,
 					CategoryId = 1,
-					Tags = new List<int> { (int)FoodTag.VegetarianOption }
+					Tags = new List<int> { (int)FoodTag.Vegan }
 				},
 				new FoodModel
 				{

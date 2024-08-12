@@ -2,6 +2,6 @@
 {
 	public enum FoodTag
 	{
-		New, Vegetarian, VegetarianOption, Recommended
+		New, Vegetarian, Vegan, Recommended
 	}
 }
