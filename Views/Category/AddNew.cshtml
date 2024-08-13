@@ -2,49 +2,45 @@
 @model CreateCategoryDto
 
 @{
-	ViewData["Title"] = "Add New";
+	ViewData["Title"] = "Add new category";
 }
 
-<div class="text-center">
+<center>
+	<h4>Create category</h4>
+</center>
 
-	<h1>Create new note</h1>
-	<hr />
 
-	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="d-flex justify-content-center mb-2" style="width: 100%;">
+	<div class="row justify-content-center" style="width: 540px; ">
+		<div class="col">
+			<section>
 
-	<form asp-controller="Category" asp-action="AddNew">
-		<div class="mb-3">
-			<label asp-for="Name" class="form-label"></label>
-			<input type="text" asp-for="Name" name="Name" class="form-control" />
-			<span asp-validation-for="Name" class="text-danger"></span>
+				<form asp-controller="Category" asp-action="AddNew">
+					<hr />
+					<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+					<div class="form-floating mb-3">
+						<input asp-for="Name" class="form-control" aria-required="true" placeholder="Category" />
+						<label asp-for="Name" class="form-label">Name</label>
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="form-floating mb-3">
+						<input asp-for="Description" class="form-control" placeholder="Description" />
+						<label asp-for="Description" class="form-label">Description</label>
+						<span asp-validation-for="Description" class="text-danger"></span>
+					</div>
+					<div class="d-flex gap-2">
+						<button type="submit" class="btn btn-lg btn-primary w-100">Save</button>
+						<a class="btn btn-lg btn-secondary w-100" asp-action="Home" asp-controller="Home">Cancel</a>
+					</div>
+				</form>
+			</section>
 		</div>
-
-		<div class="mb-3">
-			<label asp-for="Description" class="form-label"></label>
-			<input type="text" asp-for="Description" name="Description" class="form-control" />
-			<span asp-validation-for="Description" class="text-danger"></span>
-		</div>
-
-		<button type="submit" class="btn btn-primary">Add</button>
-		<a class="btn btn-secondary"  asp-action="Home" asp-controller="Home">Cancel</a>
-
-	</form>
-
-
-
-	@* Not needed for now, but we would if other type of validations were needed, such as credit cards*@
-	@section Scripts {
-		<partial name="_ValidationScriptsPartial" />
-	}
-
-	<script type="text/javascript">
-		function fileCheck(obj) {
-			var fileExtension = ['jpeg', 'jpg', 'png'];
-			if ($.inArray($(obj).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-				alert("Only '.jpeg','.jpg', '.png' formats are allowed.");
-				$(obj).val('');
-			}
-		}
-	</script>
-
+	</div>
 </div>
+
+
+@* Not needed for now, but we would if other type of validations were needed, such as credit cards*@
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
+
