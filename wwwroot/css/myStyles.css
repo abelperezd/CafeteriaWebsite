@@ -60,7 +60,7 @@
 }
 
 .categoryItem:hover {
-    background-color: #b3b3b3; /* Light gray color */
+    /*background-color: #b3b3b3;*/ /* Light gray color */
     /*opacity: 0.7;*/
 }
 
