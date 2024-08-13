@@ -1,4 +1,6 @@
-﻿namespace CafeteriaWebsite.Models
+﻿using CafeteriaWebsite.Enums;
+
+namespace CafeteriaWebsite.Models
 {
 	public class CategoryDto
 	{
@@ -10,5 +12,24 @@
 			Category = category;
 			Food = food;
 		}
+
+		public string GetTagColor(FoodTag tag)
+		{
+
+
+			switch (tag)
+			{
+				case FoodTag.Recommended:
+					return "#daae61";
+				case FoodTag.New:
+					return "#61cada";
+				case FoodTag.Vegetarian:
+					return "#61da6c";
+				case FoodTag.Vegan:
+					return "#3b7941";
+			}
+			return "";
+		}
+
 	}
 }

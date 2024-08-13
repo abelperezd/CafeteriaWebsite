@@ -1,7 +1,21 @@
-﻿.foodItemCard {
+﻿
+.linkIcon:hover {
+    cursor: pointer;
+}
+
+.back-btn {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    z-index: 10;
+    font-size: 1.5rem;
+}
+
+/*Menu*/
+
+.foodItemCard {
     margin: 0 auto;
     float: none;
-    /*border: none;*/
     border-top: none;
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
@@ -12,23 +26,20 @@
 }
 
 .menuHeader {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
+    border: none;
     /*border-radius: 0 !important;*/
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
 
-.square-img-wrapper {
+.menu-img-wrapper {
     position: relative;
     width: 100%;
     padding-top: 100%; /* This ensures a square aspect ratio (1:1) */
     overflow: hidden; /* Ensures that the image fits within the square bounds */
 }
 
-.square-img {
+.menu-img {
     position: absolute;
     top: 0;
     left: 0;
@@ -41,6 +52,18 @@
     border-bottom-left-radius: 0;
 }
 
-.linkIcon:hover {
-    cursor: pointer;
+/*Home*/
+
+.categoryItem {
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    border-radius: 0;
+}
+
+.categoryItem:hover {
+    background-color: #b3b3b3; /* Light gray color */
+    /*opacity: 0.7;*/
+}
+
+.homeList {
+    border: none;
 }

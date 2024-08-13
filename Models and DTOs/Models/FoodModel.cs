@@ -21,16 +21,16 @@ namespace CafeteriaWebsite.Models
 
 
 
-		public List<string> TagsAsEnums
+		public List<FoodTag> TagsAsEnums
 		{
 			get
 			{
 				if (Tags == null)
-					return new List<string>();
+					return new List<FoodTag>();
 
 				return Tags
 					//.Where(tag => Enum.IsDefined(typeof(FoodTag), tag)) // Ensure the int can be converted to a FoodTag
-					.Select(tag => ((FoodTag)tag).ToString().Replace("_", " ")) // Convert int to FoodTag
+					.Select(tag => ((FoodTag)tag)/*.ToString().Replace("_", " ")*/) // Convert int to FoodTag
 					.ToList();
 			}
 		}

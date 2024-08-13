@@ -26,23 +26,6 @@
 </div>
 
 <!-- Info modal -->
-@* <div class="modal fade" id="toastInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="infoTitle"></h1>
-
-				<img id="infoImage" src="" alt="Food Image" />
-
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<h5 class="modal-body" id="infoDescription"></h5>
-
-			<input type="hidden" id="idToRemove" />
-		</div>
-	</div>
-</div> *@
-
 <div class="modal fade" id="toastInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -57,8 +40,8 @@
 						<p id="infoDescription"></p>
 					</div>
 					<div class="col-4" id="infoImageContainer">
-						<div class="square-img-wrapper">
-							<img id="infoImage" class="img-fluid rounded square-img" src="" alt="Food Image">
+						<div class="menu-img-wrapper">
+							<img id="infoImage" class="img-fluid rounded menu-img" src="" alt="Food Image">
 						</div>
 
 					</div>
@@ -73,14 +56,18 @@
 	</div>
 </div>
 
+
+
 <div>
 
-	<div class="text-center justify-content-center">
-		<h2></h2>
+	<div class="d-flex justify-content-center" style="position: relative">
+		<div class="back-btn">
+			<a asp-controller="Home"
+			   asp-action="Home">
+				<i class="bi bi-caret-left-square"></i>
+			</a>
 
-	</div>
-
-	<div class="d-flex justify-content-center ">
+		</div>
 
 		<div class="card menuHeader text-center mb-2 brown-bg rounded-top" style="width: 540px;">
 			<div class="card-body">
@@ -128,7 +115,7 @@
 										<div class="d-flex flex-wrap justify-content-end">
 											@for (var i = 0; i < food.TagsAsEnums.Count; i++)
 											{
-												<span class="badge rounded-pill bg-primary ms-1">@food.TagsAsEnums[i]</span>
+												<span class="badge ms-1" style="background-color: @Model.GetTagColor(food.TagsAsEnums[i]);">@food.TagsAsEnums[i]</span>
 											}
 										</div>
 									</div>
@@ -140,9 +127,9 @@
 						{
 							<div class="col-2">
 
-								<div class="square-img-wrapper">
+								<div class="menu-img-wrapper">
 
-									<img id="img-@food.Id" class="img-fluid square-img" src="@food.Image.ImageAsString" alt="Food Image">
+									<img id="img-@food.Id" class="img-fluid menu-img" src="@food.Image.ImageAsString" alt="Food Image">
 								</div>
 
 							</div>
@@ -163,15 +150,18 @@
 		}
 	</div>
 
-	@if (User.Identity.IsAuthenticated)
-	{
-		<a class="btn btn-secondary"
-		   asp-controller="Food"
-		   asp-action="AddNew"
-		   asp-route-categoryId="@Model.Category.Id">
-			<i class="bi-plus-circle-dotted"></i>
-		</a>
-	}
+	<div class="d-flex justify-content-center mt-3">
+
+		@if (User.Identity.IsAuthenticated)
+		{
+			<a class="linkIcon" style="font-size: 1.5rem;"
+			   asp-controller="Food"
+			   asp-action="AddNew"
+			   asp-route-categoryId="@Model.Category.Id">
+				<i class="bi bi-plus-square"></i>
+			</a>
+		}
+	</div>
 
 </div>
 
