@@ -61,15 +61,24 @@
 
 <div>
 
-	<div class="d-flex justify-content-center" style="position: relative">
+	<div class="d-flex justify-content-center" style="position: relative;">
 		<div class="back-btn">
 			<a asp-controller="Home"
 			   asp-action="Home">
-				<i class="bi bi-caret-left-square"></i>
+				<i class="main-color bi bi-caret-left-square"></i>
 			</a>
 
 		</div>
 
+		<a asp-controller="Home"
+		   asp-action="Home">
+			<img id="minimalPhoto" class="mb-2" src="~/img/minimal_green_logo.png" alt="logo" />
+		</a>
+
+
+	</div>
+
+	<div class="d-flex justify-content-center">
 		<div class="card menuHeader text-center mb-2 brown-bg rounded-top" style="width: 540px;">
 			<div class="card-body">
 				<h5 class="card-title">@Model.Category.Name</h5>
@@ -94,11 +103,11 @@
 									<div class="col-10">
 										@for (var i = 0; i < food.TagsAsEnums.Count; i++)
 										{
-											<span class="badge me-1" style="background-color: @Model.GetTagColor(food.TagsAsEnums[i]);">@food.TagsAsEnums[i]</span>
+											<span class="badge me-1" style=" background-color: @Model.GetTagColor(food.TagsAsEnums[i]);">@food.TagsAsEnums[i]</span>
 										}
 									</div>
 									<div class="col-2 text-end">
-										<span class="badge rounded-pill border @* border-primary text-primary *@">$500</span>
+										<span class="pricePill badge rounded-pill border border-primary">$500</span>
 									</div>
 								</div>
 								<div class="row row-cols-2  d-flex pt-3">
@@ -107,11 +116,18 @@
 											@food.Name
 										</p>
 									</div>
-									<div class="col-2 text-end  ">
+									<div class="col-2 text-end">
+										@if (User.Identity.IsAuthenticated)
+										{
+											<a id="deleteBtn-@food.Id" class="linkIcon deleteButton text-danger" style="text-decoration:unset !important">
+												<i class="bi bi-trash-fill"></i>
+											</a>
+										}
+
 										@if (!string.IsNullOrEmpty(food.Description))
 										{
 											<a id="infoBtn-@food.Id" class="infoButton linkIcon">
-												<i class="bi bi-info-circle"></i>
+												<i class="main-color bi bi-info-circle"></i>
 											</a>
 										}
 
@@ -129,24 +145,11 @@
 						@if (food.Image != null)
 						{
 							<div class="col-2">
-
 								<div class="menu-img-wrapper">
-
 									<img id="img-@food.Id" class="img-fluid menu-img" src="@food.Image.ImageAsString" alt="Food Image">
 								</div>
-
 							</div>
 						}
-						<p class="card-text">
-							<small class="text-body-secondary d-flex justify-content-center">
-								@if (User.Identity.IsAuthenticated)
-								{
-									<a id="deleteBtn-@food.Id" class="linkIcon deleteButton text-danger">
-										<i class="bi-trash-fill"></i>
-									</a>
-								}
-							</small>
-						</p>
 					</div>
 				</div>
 			</div>
@@ -161,7 +164,7 @@
 			   asp-controller="Food"
 			   asp-action="AddNew"
 			   asp-route-categoryId="@Model.Category.Id">
-				<i class="bi bi-plus-square"></i>
+				<i class="main-color bi bi-plus-square"></i>
 			</a>
 		}
 	</div>

@@ -5,8 +5,8 @@
 }
 
 <!-- Delete modal -->
-<div class="modal fade" id="toastRemove" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+<div class="modal  fade" id="toastRemove" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog ">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h1 class="modal-title fs-5" id="exampleModalLabel">Remove category?</h1>
@@ -25,19 +25,21 @@
 	</div>
 </div>
 
-<div class="text-center">
+<div class="text-center ">
+
+	<img id="homePhoto" src="~/img/big_green_logo.png" alt="logo" />
 
 	<div class="text-center d-flex justify-content-center align-items-center">
-		<div class="card homeList" style="width: 540px;">
+		<div class="card homeList transparent-bg" style="width: 540px;">
 			<ul class="list-group list-group-flush">
 
 				@foreach (CategoryModel categoryModel in Model)
 				{
-					<li class="list-group-item" id="@categoryModel.Id">
+					<li class="list-group-item transparent-bg" id="@categoryModel.Id">
 
 						<div class="row row-cols-@(User.Identity.IsAuthenticated? "3":"1")">
 							<div class="p-0 col-@(User.Identity.IsAuthenticated? "10":"12")">
-								<a id="categ-@categoryModel.Id" class="btn categoryItem w-100 h-100"
+								<a id="categ-@categoryModel.Id" class="btn noBorderOnClick categoryItem w-100 h-100"
 								   asp-controller="Category"
 								   asp-action="Menu"
 								   asp-route-categoryId=@categoryModel.Id> @categoryModel.Name</a>
@@ -50,7 +52,7 @@
 									</a>
 								</div>
 								<div class="col-1 d-flex justify-content-center align-items-center" id="infoImageContainer">
-									<a id="editBtn-@categoryModel.Id" class="linkIcon" asp-action="Update" asp-controller="Category" asp-route-id="@categoryModel.Id">
+									<a id="editBtn-@categoryModel.Id" class="linkIcon " asp-action="Update" asp-controller="Category" asp-route-id="@categoryModel.Id">
 										<i class="bi bi-pencil-square"></i>
 									</a>
 								</div>
@@ -67,10 +69,10 @@
 
 		@if (User.Identity.IsAuthenticated)
 		{
-			<a class="btn btn-secondary"
+			<a class="linkIcon" style="font-size: 1.5rem;"
 			   asp-controller="Category"
 			   asp-action="AddNew">
-				Add new
+				<i class="main-color bi bi-plus-square"></i>
 			</a>
 		}
 	</div>

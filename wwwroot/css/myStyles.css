@@ -1,4 +1,77 @@
-﻿
+﻿:root {
+    --main-col: #8a9859;
+    --main-col-light: rgba(138, 152, 89, 0.25);
+    --aux-col-1: #0d6efd;
+    --bg-col: #f1e5a9;
+    --important-col: #ff8c00;
+}
+
+.bg-color {
+    background-color: var(--bg-col);
+}
+
+.main-color {
+    color: var(--main-col);
+}
+
+.modal-content {
+    background-color: var(--bg-col);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--main-col-light) !important;
+}
+
+/*.modal-body{
+    border-bottom: 1px solid var(--main-col-light) !important;
+}*/
+
+.modal-footer{
+    border-top: 0px solid var(--main-col-light) !important;
+}
+
+.main-color-light {
+    color: var(--main-col-light);
+}
+
+.black-color{
+    color: black;
+    opacity:.4;
+}
+
+.transparent-bg {
+    background-color: transparent;
+}
+
+.noBorderOnClick:focus, .noBorderOnClick:active, .noBorderOnClick {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+
+.transparent-bg-noborder {
+    background-color: transparent;
+    border: none;
+}
+
+
+h4 {
+    color: var(--main-col);
+}
+
+h1 {
+    color: var(--main-col);
+}
+
+hr {
+    color: var(--main-col);
+}
+
+footer.border-top {
+    border-top: 1px solid var(--main-col) !important;
+}
+
 .linkIcon:hover {
     cursor: pointer;
 }
@@ -11,7 +84,25 @@
     font-size: 1.5rem;
 }
 
+#homePhoto {
+    width: 400px;
+    margin: 2rem 0;
+    /*border-radius: 50%;*/
+}
+
+#minimalPhoto {
+    width: 100px;
+    /*margin: 2rem 0*/;
+    /*border-radius: 50%;*/
+}
+
 /*Menu*/
+
+.pricePill {
+    color: black;
+    border: 1px;
+    border-color: var(--main-col-light) !important;
+}
 
 .foodItemCard {
     margin: 0 auto;
@@ -22,6 +113,8 @@
     height: 90px; /* Fixed height for uniformity */
     flex-direction: column;
     justify-content: space-between; /* Esto asegura que la segunda fila quede abajo */
+    background-color: rgb(255, 255, 255, 0.25);
+    border-color: var(--main-col-light);
 }
 
 .brown-bg {
@@ -33,6 +126,7 @@
     /*border-radius: 0 !important;*/
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
+    background-color: var(--main-col);
 }
 
 .menu-img-wrapper {
@@ -66,10 +160,10 @@
     border-radius: 0;
 }
 
-.categoryItem:hover {
-    /*background-color: #b3b3b3;*/ /* Light gray color */
-    /*opacity: 0.7;*/
-}
+    .categoryItem:hover {
+        /*background-color: #b3b3b3;*/ /* Light gray color */
+        /*opacity: 0.7;*/
+    }
 
 .homeList {
     border: none;
