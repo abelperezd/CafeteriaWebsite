@@ -19,6 +19,9 @@
     border-top: none;
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
+    height: 90px; /* Fixed height for uniformity */
+    flex-direction: column;
+    justify-content: space-between; /* Esto asegura que la segunda fila quede abajo */
 }
 
 .brown-bg {
@@ -50,6 +53,10 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 3px; /* Adjust the radius as needed */
     border-bottom-left-radius: 0;
+}
+
+.card-body .row-cols-2:last-child {
+    margin-top: auto; /* Empuja esta fila hacia la parte inferior de la tarjeta */
 }
 
 /*Home*/
