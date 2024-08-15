@@ -7,7 +7,7 @@ using System;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("CafeteriaDbContextConnection") ?? throw new InvalidOperationException("Connection string 'CafeteriaDbContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("CafeteriaDbContextConnectionPublished") ?? throw new InvalidOperationException("Connection string 'CafeteriaDbContextConnection' not found.");
 
 //To allow the login pages
 builder.Services.AddRazorPages(); // Add Razor Pages
@@ -16,7 +16,7 @@ builder.Services.AddRazorPages(); // Add Razor Pages
 builder.Services.AddControllersWithViews();
 
 
-builder.Services.AddDbContext<CafeteriaDbContext>(options => options.UseSqlServer("name=CafeteriaDbContextConnection"));
+builder.Services.AddDbContext<CafeteriaDbContext>(options => options.UseSqlServer("name=CafeteriaDbContextConnectionPublished"));
 
 //builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<CafeteriaDbContext>();
 
@@ -26,7 +26,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 builder.Services.AddTransient<IFoodRepository, MockFoodRepository>();
 builder.Services.AddTransient<ICategoryRepository, MockCategoryRepository>();
-builder.Services.AddTransient<IFoodImageRepository, FoodImageRepository>();
+//builder.Services.AddTransient<IFoodImageRepository, FoodImageRepository>();
 
 //builder.Services.AddDbContext<CafeteriaDbContext>(options => options.UseSqlServer("name=CafeteriaDbContextConnection"));
 
@@ -74,7 +74,6 @@ app.Run();
 async Task SeedAdminUser(IServiceProvider serviceProvider)
 {
 	return;
-
 	var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 

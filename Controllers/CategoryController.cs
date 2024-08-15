@@ -15,13 +15,11 @@ namespace CafeteriaWebsite.Controllers
 	{
 		private readonly ICategoryRepository _categoryRepository;
 		private readonly IFoodRepository _foodRepository;
-		private readonly IFoodImageRepository _foodImageRepository;
 
-		public CategoryController(ICategoryRepository categoryRepository, IFoodRepository foodRepository, IFoodImageRepository foodImageRepository)
+		public CategoryController(ICategoryRepository categoryRepository, IFoodRepository foodRepository)
 		{
 			_categoryRepository = categoryRepository;
 			_foodRepository = foodRepository;
-			_foodImageRepository = foodImageRepository;
 		}
 
 		public async Task<IActionResult> Menu(int categoryId)

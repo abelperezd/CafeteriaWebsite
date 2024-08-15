@@ -4,21 +4,20 @@ using CafeteriaWebsite.Repositories.Interfaces;
 using CafeteriaWebsite.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using System;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CafeteriaWebsite.Controllers
 {
 	public class FoodController : Controller
 	{
 		private readonly IFoodRepository _foodRepository;
-		private readonly IFoodImageRepository _foodImageRepository;
+		//commented for deployment
+		//private readonly IFoodImageRepository _foodImageRepository;
 
-		public FoodController(ICategoryRepository categoryRepository, IFoodRepository foodRepository, IFoodImageRepository foodImageRepository)
+		public FoodController(ICategoryRepository categoryRepository, IFoodRepository foodRepository/*, IFoodImageRepository foodImageRepository*/)
 		{
 			_foodRepository = foodRepository;
-			_foodImageRepository = foodImageRepository;
+			//commented for deployment
+			//_foodImageRepository = foodImageRepository;
 		}
 
 		#region Remove
@@ -104,8 +103,8 @@ namespace CafeteriaWebsite.Controllers
 					ImageData = imageData,
 					FileExtension = image.FileName.GetExtension()
 				};
-
-				return await _foodImageRepository.Create(imageModel);
+				//commented for deployment
+				//return await _foodImageRepository.Create(imageModel);
 			}
 			return -1;
 
