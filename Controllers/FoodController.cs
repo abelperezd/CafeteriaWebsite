@@ -62,7 +62,12 @@ namespace CafeteriaWebsite.Controllers
 				return View(dto);
 			}
 
-			FoodModel food = new FoodModel() { Name = dto.Name, CategoryId = dto.CategoryId, Description = dto.Description, Tags = dto.TagsIntList };
+			FoodModel food = new FoodModel()
+			{ Name = dto.Name,
+				CategoryId = dto.CategoryId,
+				Description = dto.Description,
+				Price = dto.Price,
+				Tags = dto.TagsIntList };
 
 			if (dto.Image != null)
 			{

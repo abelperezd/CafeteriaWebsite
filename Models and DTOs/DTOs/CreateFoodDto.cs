@@ -14,6 +14,9 @@ namespace CafeteriaWebsite.Models
 
 		public string? Description { get; set; }
 
+		[Required(ErrorMessage = "The {0} field is required")]
+		public float Price { get; set; }
+
 		//public string? ImageUrl { get; set; }
 
 		public List<bool> Tags { get; private set; } = new List<bool>();

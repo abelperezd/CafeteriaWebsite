@@ -11,20 +11,32 @@ namespace CafeteriaWebsite.Repositories.MockRepositories
 			new CategoryModel()
 			{
 				Id= 1,
-				Name = "Category 1",
-				Description = "Description 1"
+				Name = "Sandwiches and Toasts",
+				Description = "Enjoy our gourmet sandwiches and toasts, crafted with fresh ingredients and perfectly balanced flavors in every bite."
 			},
 			new CategoryModel()
 			{
 				Id= 2,
-				Name = "Category 2",
-				Description = "Description 2"
+				Name = "Pancakes",
+				Description = "Indulge in our fluffy pancakes, made from scratch and served warm with your choice of sweet or savory toppings. "
 			},
 			new CategoryModel()
 			{
 				Id= 3,
-				Name = "Category 3",
-				Description = null
+				Name = "Cakes",
+				Description = "Whether you prefer classic or creative, our cakes are baked to perfection and sure to satisfy your sweet tooth."
+			},
+			new CategoryModel()
+			{
+				Id= 4,
+				Name = "Snacks",
+				Description = "Explore our tasty snack selection, offering a variety of quick bites that are perfect for satisfying your cravings."
+			},
+			new CategoryModel()
+			{
+				Id= 5,
+				Name = "Drinks",
+				Description = "Whether you're in the mood for something fruity, fizzy, or smooth, we have the perfect drink to quench your thirst."
 			}
 		};
 

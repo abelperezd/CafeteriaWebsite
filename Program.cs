@@ -24,8 +24,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 	.AddEntityFrameworkStores<CafeteriaDbContext>()
 	.AddDefaultTokenProviders();
 
-builder.Services.AddTransient<IFoodRepository, FoodRepository>();
-builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IFoodRepository, MockFoodRepository>();
+builder.Services.AddTransient<ICategoryRepository, MockCategoryRepository>();
 builder.Services.AddTransient<IFoodImageRepository, FoodImageRepository>();
 
 //builder.Services.AddDbContext<CafeteriaDbContext>(options => options.UseSqlServer("name=CafeteriaDbContextConnection"));
@@ -74,6 +74,7 @@ app.Run();
 async Task SeedAdminUser(IServiceProvider serviceProvider)
 {
 	return;
+
 	var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 

@@ -97,7 +97,7 @@
 			<div class="col " id="@food.Id">
 				<div class="card foodItemCard mb-1" style="max-width: 540px;">
 					<div class="row g-0">
-						<div class="@(food.Image != null ? "col-10" : "col-12")">
+						<div class="@(string.IsNullOrEmpty( food.ImageSrc) ? "col-12" : "col-10")">
 							<div class="card-body p-2 mx-2">
 								<div class="row row-cols-2 " id="cardFooter-@food.Id">
 									<div class="col-10">
@@ -107,7 +107,7 @@
 										}
 									</div>
 									<div class="col-2 text-end">
-										<span class="pricePill badge rounded-pill border border-primary">$500</span>
+										<span class="pricePill badge rounded-pill border border-primary">$@food.Price</span>
 									</div>
 								</div>
 								<div class="row row-cols-2  d-flex pt-3">
@@ -142,11 +142,11 @@
 								}
 							</div>
 						</div>
-						@if (food.Image != null)
+						@if (!string.IsNullOrEmpty(food.ImageSrc))
 						{
 							<div class="col-2">
 								<div class="menu-img-wrapper">
-									<img id="img-@food.Id" class="img-fluid menu-img" src="@food.Image.ImageAsString" alt="Food Image">
+									<img id="img-@food.Id" class="img-fluid menu-img" src="@food.ImageSrc" alt="Food Image">
 								</div>
 							</div>
 						}

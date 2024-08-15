@@ -31,7 +31,7 @@ namespace CafeteriaWebsite.AppDbContext
 
 		private static void SeedData(ModelBuilder builder)
 		{
-			SeedCafeteriaData(builder);
+			//SeedCafeteriaData(builder);
 		}
 
 		private static void SeedCafeteriaData(ModelBuilder builder)

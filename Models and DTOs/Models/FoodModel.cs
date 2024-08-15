@@ -9,7 +9,7 @@ namespace CafeteriaWebsite.Models
 		public string Name { get; set; }
 
 		public string? Description { get; set; }
-
+		public float Price{ get; set; }
 
 		public List<int>? Tags { get; set; }
 
@@ -19,7 +19,8 @@ namespace CafeteriaWebsite.Models
 		public CategoryModel? Category { get; set; }
 		public FoodImageModel? Image { get; set; }
 
-
+		//For the mock repository
+		public string? ImageUrl { get; set; }
 
 		public List<FoodTag> TagsAsEnums
 		{
@@ -34,5 +35,7 @@ namespace CafeteriaWebsite.Models
 					.ToList();
 			}
 		}
+
+		public string ImageSrc => Image != null ? Image.ImageAsString : ImageUrl;
 	}
 }

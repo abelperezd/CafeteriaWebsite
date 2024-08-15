@@ -4,6 +4,7 @@ using CafeteriaWebsite.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CafeteriaWebsite.DatabaseContext.Migrations
 {
     [DbContext(typeof(CafeteriaDbContext))]
-    partial class CafeteriaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240815140011_priceAdded")]
+    partial class priceAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,6 +43,25 @@ namespace CafeteriaWebsite.DatabaseContext.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Description 1",
+                            Name = "Category 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Description 2",
+                            Name = "Category 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Category 3"
+                        });
                 });
 
             modelBuilder.Entity("CafeteriaWebsite.Models.FoodImageModel", b =>
@@ -80,9 +102,6 @@ namespace CafeteriaWebsite.DatabaseContext.Migrations
                     b.Property<int?>("FoodImageId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -102,6 +121,42 @@ namespace CafeteriaWebsite.DatabaseContext.Migrations
                         .HasFilter("[FoodImageId] IS NOT NULL");
 
                     b.ToTable("Food");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Description = "Food description 1",
+                            Name = "Food1",
+                            Price = 0f,
+                            Tags = "[2]"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            Description = "Food description 2",
+                            Name = "Food2",
+                            Price = 0f,
+                            Tags = "[0]"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 2,
+                            Description = "Food description 3",
+                            Name = "Food3",
+                            Price = 0f
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 3,
+                            Description = "Food description 4",
+                            Name = "Food4",
+                            Price = 0f
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
