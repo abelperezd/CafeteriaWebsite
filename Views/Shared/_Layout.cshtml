@@ -20,6 +20,11 @@
 	@*Import icons*@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+	@*Font*@
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Moderustic:wght@300..800&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+
 </head>
 <body class="bg-color">
 	<header>
@@ -32,19 +37,24 @@
 
 	<footer class="border-top footer text-muted">
 		<div class="container">
-			&copy; 2024 - CafeteriaWebsite - 
 
-				@if (SignInManager.IsSignedIn(User))
-				{
-				<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Home", "Home")" method="post" class="d-inline">
-						<button type="submit" class="btn btn-link text-dark">Logout</button>
-					</form>
-				}
-				else
-				{
-					<a class="text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-				}
-			
+			<div class="row row-cols-2">
+				<div class="col-7">
+					&copy; 2024 - Abel Pérez - Brand by <a class="text-muted text-dark" href="https://www.instagram.com/ahros_design/" target="_blank">AHROS DESIGN</a>
+				</div>
+				<div class="col-5 text-end">
+					@if (SignInManager.IsSignedIn(User))
+					{
+						<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Home", "Home")" method="post" class="d-inline noBorderOnClick">
+							<button type="submit" class="btn btn-link text-dark text-muted">Logout</button>
+						</form>
+					}
+					else
+					{
+						<a class="text-dark text-muted" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+					}
+				</div>
+			</div>
 		</div>
 	</footer>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>

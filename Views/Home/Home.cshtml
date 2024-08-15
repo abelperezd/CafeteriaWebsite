@@ -42,7 +42,7 @@
 								<a id="categ-@categoryModel.Id" class="btn noBorderOnClick categoryItem w-100 h-100"
 								   asp-controller="Category"
 								   asp-action="Menu"
-								   asp-route-categoryId=@categoryModel.Id> @categoryModel.Name</a>
+								   asp-route-categoryId=@categoryModel.Id> @categoryModel.Name.ToUpper()</a>
 							</div>
 							@if (User.Identity.IsAuthenticated)
 							{

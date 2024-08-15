@@ -81,7 +81,7 @@
 	<div class="d-flex justify-content-center">
 		<div class="card menuHeader text-center mb-2 brown-bg rounded-top" style="width: 540px;">
 			<div class="card-body">
-				<h5 class="card-title">@Model.Category.Name</h5>
+				<h5 class="card-title">@Model.Category.Name.ToUpper()</h5>
 				@if (Model.Category.Description != null)
 				{
 					<p class="card-text">@Model.Category.Description</p>

@@ -26,7 +26,7 @@
     border-bottom: 1px solid var(--main-col-light) !important;
 }*/
 
-.modal-footer{
+.modal-footer {
     border-top: 0px solid var(--main-col-light) !important;
 }
 
@@ -34,9 +34,8 @@
     color: var(--main-col-light);
 }
 
-.black-color{
-    color: black;
-    opacity:.4;
+.list-group-item {
+    border-color: var(--main-col-light) !important;
 }
 
 .transparent-bg {
