@@ -1,6 +1,8 @@
 # Ficka Bliss - Cafeteria Website
 
-Personal project. It is a website of a fictitious coffee shop developed with ASP.NET MVC. In addition to being able to view categories and items, it includes an administrator profile that is allowed to perform CRUD operations, such as creating new categories and items (including photos), deleting and updating them.
+Personal project. It is a website of a fictitious coffee shop developed with ASP.NET MVC. In addition to being able to view categories and items, it includes an admin profile that is allowed to perform CRUD operations, such as creating new categories and items (including photos), deleting and updating them.
+
+CRUD, Entity Framework, Identity, Bootstrap.
 
 Website published [here](https://fickabliss.azurewebsites.net/).
 

@@ -4,69 +4,16 @@
 	ViewData["Title"] = "Home Page";
 }
 
-<!-- Delete modal -->
-<div class="modal  fade" id="toastRemove" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog ">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel">Remove category?</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" id="toastRemoveButton">Remove</button>
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-			</div>
-
-			<input type="hidden" id="idToRemove" />
-
-		</div>
-	</div>
-</div>
 
 <div class="text-center ">
 
 	<img id="homePhoto" src="~/img/big_green_logo.png" alt="logo" />
 
 	<div class="text-center d-flex justify-content-center align-items-center">
-		<div class="card homeList transparent-bg" style="width: 540px;">
-			<ul class="list-group list-group-flush">
-
-				@foreach (CategoryModel categoryModel in Model)
-				{
-					<li class="list-group-item transparent-bg" id="@categoryModel.Id">
-
-						<div class="row row-cols-@(User.Identity.IsAuthenticated? "3":"1")">
-							<div class="p-0 col-@(User.Identity.IsAuthenticated? "10":"12")">
-								<a id="categ-@categoryModel.Id" class="btn noBorderOnClick categoryItem w-100 h-100"
-								   asp-controller="Category"
-								   asp-action="Menu"
-								   asp-route-categoryId=@categoryModel.Id> @categoryModel.Name.ToUpper()</a>
-							</div>
-							@if (User.Identity.IsAuthenticated)
-							{
-								<div class="col-1 d-flex justify-content-center align-items-center" id="infoImageContainer">
-									<a id="deleteBtn-@categoryModel.Id" class="linkIcon text-danger deleteButton">
-										<i class="bi-trash-fill"></i>
-									</a>
-								</div>
-								<div class="col-1 d-flex justify-content-center align-items-center" id="infoImageContainer">
-									<a id="editBtn-@categoryModel.Id" class="linkIcon " asp-action="Update" asp-controller="Category" asp-route-id="@categoryModel.Id">
-										<i class="bi bi-pencil-square"></i>
-									</a>
-								</div>
-							}
-						</div>
-					</li>
-				}
-			</ul>
-		</div>
+		@await Html.PartialAsync("_CategoryList", Model)
 	</div>
 
 	<div class="mt-3">
-
-
 		@if (User.Identity.IsAuthenticated)
 		{
 			<a class="linkIcon" style="font-size: 1.5rem;"
@@ -78,58 +25,13 @@
 	</div>
 </div>
 
+@await Html.PartialAsync("_DeleteCategoryModal")
+
 @section Scripts {
-
 	<script>
-
-		function getFoodId(button) {
-			//previous implementation
-			//return button.closest('tr').find('.id').val(); // Retrieve the note ID from the closest row to the button
-			return button.attr("id").split('-')[1];
-		}
-
-		//Delete
-
-		$(function () {
-			$(".deleteButton").on('click', function (e) {
-				e.preventDefault();
-
-				const button = $(this);
-				const toast = $("#toastRemove");
-
-				toast.modal('show');
-
-				const id = getFoodId(button);
-				toast.find(".modal-body").text($("#categ-" + id).text());
-				toast.find("#idToRemove").val(id)
-			});
-		})
-
-		$(function () {
-			$("#toastRemoveButton").on('click', function (e) {
-
-				e.preventDefault();
-
-				const toast = $("#toastRemove");
-				const foodId = toast.find("#idToRemove").val()
-
-				$.ajax({
-					url: '@Url.Action("DeleteFromToast", "Category")',
-					type: 'POST',
-					data: { id: foodId },
-					success: function (response, status, jqxhr) {
-						console.log("Category removed: ", response)
-						$('#' + foodId).remove();
-					},
-					error: function (jqxhr, status, error) {
-						console.log("Error removing note: ", error);
-					},
-					complete: function () {
-						toast.modal('hide');
-					}
-				});
-			});
-		})
+		var deleteCategoryUrl = '@Url.Action("DeleteFromToast", "Category")';
 	</script>
+
+	<script type="text/javascript" src="~/js/deleteCategory.js"></script>
 }
 

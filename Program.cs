@@ -59,7 +59,7 @@ app.MapControllerRoute(
 //enables razor pages model
 app.MapRazorPages();
 
-
+/*
 using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;
@@ -68,6 +68,7 @@ using (var scope = app.Services.CreateScope())
 
 	await SeedAdminUser(services);
 }
+*/
 
 app.Run();
 

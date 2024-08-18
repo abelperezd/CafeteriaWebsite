@@ -1,13 +1,8 @@
-﻿using CafeteriaWebsite.Enums;
-using CafeteriaWebsite.Models;
+﻿using CafeteriaWebsite.Models;
 using CafeteriaWebsite.Repositories.Interfaces;
 using CafeteriaWebsite.Utils;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using System;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CafeteriaWebsite.Controllers
 {
