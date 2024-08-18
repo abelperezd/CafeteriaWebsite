@@ -21,7 +21,6 @@ namespace CafeteriaWebsite.Controllers
             return View(await _categoryRepository.GetAll());
         }
 
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

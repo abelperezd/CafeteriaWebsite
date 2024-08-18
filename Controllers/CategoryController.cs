@@ -40,6 +40,8 @@ namespace CafeteriaWebsite.Controllers
 			return View(dto);
 		}
 
+		#region Delete
+
 		[HttpPost]
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> DeleteFromToast(int id)
@@ -56,6 +58,10 @@ namespace CafeteriaWebsite.Controllers
 
 			return Ok();
 		}
+
+		#endregion
+
+		#region Add
 
 		public async Task<IActionResult> AddNew()
 		{
@@ -83,6 +89,10 @@ namespace CafeteriaWebsite.Controllers
 				categoryId
 			});
 		}
+
+		#endregion
+
+		#region Update
 
 		[HttpGet]
 		public async Task<ActionResult> Update(int id)
@@ -114,6 +124,7 @@ namespace CafeteriaWebsite.Controllers
 			return RedirectToAction("Home","Home");
 		}
 
+		#endregion
 	}
 }
 

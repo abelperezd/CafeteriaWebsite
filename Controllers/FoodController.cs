@@ -13,6 +13,8 @@ namespace CafeteriaWebsite.Controllers
 		//commented for deployment
 		//private readonly IFoodImageRepository _foodImageRepository;
 
+		private List<FoodTag> AllFoodTags => Enum.GetValues(typeof(FoodTag)).Cast<FoodTag>().ToList();
+
 		public FoodController(ICategoryRepository categoryRepository, IFoodRepository foodRepository/*, IFoodImageRepository foodImageRepository*/)
 		{
 			_foodRepository = foodRepository;
@@ -21,7 +23,6 @@ namespace CafeteriaWebsite.Controllers
 		}
 
 		#region Remove
-
 
 		[HttpPost]
 		[Authorize(Roles = "Admin")]
@@ -43,7 +44,6 @@ namespace CafeteriaWebsite.Controllers
 		#endregion
 
 		#region Add
-
 
 		public async Task<IActionResult> AddNew(int categoryId)
 		{
@@ -80,8 +80,6 @@ namespace CafeteriaWebsite.Controllers
 				categoryId = dto.CategoryId
 			});
 		}
-
-		private List<FoodTag> AllFoodTags => Enum.GetValues(typeof(FoodTag)).Cast<FoodTag>().ToList();
 
 		private async Task<int?> SaveImageInDb(IFormFile image)
 		{
