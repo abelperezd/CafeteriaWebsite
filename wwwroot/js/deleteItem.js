@@ -8,7 +8,7 @@
 		toast.modal('show');
 
 		const id = getItemId(button);
-		toast.find(".modal-body").text($("#categ-" + id).text());
+		toast.find(".modal-body").text($("#text-" + id).text());
 		toast.find("#idToRemove").val(id)
 	});
 })
@@ -22,12 +22,11 @@ $(function () {
 		const foodId = toast.find("#idToRemove").val()
 
 		$.ajax({
-			//do not use Url directly brecause it cannot use .NET actions
-			url: deleteCategoryUrl,
+			url: deleteItemUrl,
 			type: 'POST',
 			data: { id: foodId },
 			success: function (response, status, jqxhr) {
-				console.log("Category removed: ", response)
+				console.log("Food removed: ", response)
 				$('#' + foodId).remove();
 			},
 			error: function (jqxhr, status, error) {

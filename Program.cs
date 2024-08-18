@@ -3,7 +3,6 @@ using CafeteriaWebsite.Repositories;
 using CafeteriaWebsite.Repositories.Interfaces;
 using CafeteriaWebsite.Repositories.MockRepositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -37,5 +37,21 @@ namespace CafeteriaWebsite.Models
 		}
 
 		public string ImageSrc => Image != null ? Image.ImageAsString : ImageUrl;
+
+		public string GetTagColor(FoodTag tag)
+		{
+			switch (tag)
+			{
+				case FoodTag.Recommended:
+					return "#daae61";
+				case FoodTag.New:
+					return "#61cada";
+				case FoodTag.Vegetarian:
+					return "#61da6c";
+				case FoodTag.Vegan:
+					return "#3b7941";
+			}
+			return "";
+		}
 	}
 }

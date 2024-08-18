@@ -4,79 +4,8 @@
 	ViewData["Title"] = Model.Category.Name;
 }
 
-<!-- Delete modal -->
-<div class="modal fade" id="toastRemove" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel">Remove item?</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" id="toastRemoveButton">Remove</button>
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-			</div>
-
-			<input type="hidden" id="idToRemove" />
-
-		</div>
-	</div>
-</div>
-
-<!-- Info modal -->
-<div class="modal fade" id="toastInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="infoTitle"></h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-
-			<div class="modal-body">
-				<div class="row row-cols-2">
-					<div class="col-8" id="infoDescriptionContainer">
-						<p id="infoDescription"></p>
-					</div>
-					<div class="col-4" id="infoImageContainer">
-						<div class="menu-img-wrapper">
-							<img id="infoImage" class="img-fluid rounded menu-img" src="" alt="Food Image">
-						</div>
-
-					</div>
-				</div>
-
-				<div id="infoFooter" class="row row-cols-2 mt-2">
-					this is the footer!!
-				</div>
-			</div>
-
-			<input type="hidden" id="idToRemove" />
-		</div>
-	</div>
-</div>
-
-
-
 <div>
-
-	<div class="d-flex justify-content-center" style="position: relative;">
-		<div class="back-btn">
-			<a asp-controller="Home"
-			   asp-action="Home">
-				<i class="main-color bi bi-caret-left-square"></i>
-			</a>
-
-		</div>
-
-		<a asp-controller="Home"
-		   asp-action="Home">
-			<img id="minimalPhoto" class="mb-2" src="~/img/minimal_green_logo.png" alt="logo" />
-		</a>
-
-
-	</div>
+	<partial name="_CategoryHeader"/>
 
 	<div class="d-flex justify-content-center">
 		<div class="card menuHeader text-center mb-2 brown-bg rounded-top" style="width: 540px;">
@@ -86,7 +15,6 @@
 				{
 					<p class="card-text">@Model.Category.Description</p>
 				}
-
 			</div>
 		</div>
 	</div>
@@ -94,65 +22,7 @@
 	<div class="row row-cols-1 g-0">
 		@foreach (var food in Model.Food)
 		{
-			<div class="col " id="@food.Id">
-				<div class="card foodItemCard mb-1" style="max-width: 540px;">
-					<div class="row g-0">
-						<div class="@(string.IsNullOrEmpty( food.ImageSrc) ? "col-12" : "col-10")">
-							<div class="card-body p-2 mx-2">
-								<div class="row row-cols-2 " id="cardFooter-@food.Id">
-									<div class="col-10">
-										@for (var i = 0; i < food.TagsAsEnums.Count; i++)
-										{
-											<span class="badge me-1" style=" background-color: @Model.GetTagColor(food.TagsAsEnums[i]);">@food.TagsAsEnums[i]</span>
-										}
-									</div>
-									<div class="col-2 text-end">
-										<span class="pricePill badge rounded-pill border border-primary">$@food.Price</span>
-									</div>
-								</div>
-								<div class="row row-cols-2  d-flex pt-3">
-									<div class="col-10  ">
-										<p id="text-@food.Id" class="">
-											@food.Name
-										</p>
-									</div>
-									<div class="col-2 text-end">
-										@if (User.Identity.IsAuthenticated)
-										{
-											<a id="deleteBtn-@food.Id" class="linkIcon deleteButton text-danger" style="text-decoration:unset !important">
-												<i class="bi bi-trash-fill"></i>
-											</a>
-										}
-
-										@if (!string.IsNullOrEmpty(food.Description))
-										{
-											<a id="infoBtn-@food.Id" class="infoButton linkIcon">
-												<i class="main-color bi bi-info-circle"></i>
-											</a>
-										}
-
-									</div>
-								</div>
-
-								@if (!string.IsNullOrEmpty(food.Description))
-								{
-									<p id="description-@food.Id" style="display: none;">
-										@food.Description
-									</p>
-								}
-							</div>
-						</div>
-						@if (!string.IsNullOrEmpty(food.ImageSrc))
-						{
-							<div class="col-2">
-								<div class="menu-img-wrapper">
-									<img id="img-@food.Id" class="img-fluid menu-img" src="@food.ImageSrc" alt="Food Image">
-								</div>
-							</div>
-						}
-					</div>
-				</div>
-			</div>
+			<partial name="_Item" model="food" />
 		}
 	</div>
 
@@ -171,92 +41,15 @@
 
 </div>
 
+@await Html.PartialAsync("_DeleteItemModal")
+@await Html.PartialAsync("_ItemInfoModal")
+
 @section Scripts {
 
 	<script>
-
-		function getFoodId(button) {
-			//previous implementation
-			//return button.closest('tr').find('.id').val(); // Retrieve the note ID from the closest row to the button
-			return button.attr("id").split('-')[1];
-		}
-
-		//Delete
-
-		$(function () {
-			$(".deleteButton").on('click', function (e) {
-				e.preventDefault();
-
-				const button = $(this);
-				const toast = $("#toastRemove");
-
-				toast.modal('show');
-
-				const id = getFoodId(button);
-				toast.find(".modal-body").text($("#text-" + id).text());
-				toast.find("#idToRemove").val(id)
-			});
-		})
-
-		$(function () {
-			$("#toastRemoveButton").on('click', function (e) {
-
-				e.preventDefault();
-
-				const toast = $("#toastRemove");
-				const foodId = toast.find("#idToRemove").val()
-
-				$.ajax({
-					url: '@Url.Action("DeleteFromToast", "Food")',
-					type: 'POST',
-					data: { id: foodId },
-					success: function (response, status, jqxhr) {
-						console.log("Food removed: ", response)
-						$('#' + foodId).remove();
-					},
-					error: function (jqxhr, status, error) {
-						console.log("Error removing note: ", error);
-					},
-					complete: function () {
-						toast.modal('hide');
-					}
-				});
-			});
-		})
-
-		//Info
-		$(function () {
-			$(".infoButton").on('click', function (e) {
-				e.preventDefault();
-
-				const button = $(this);
-				const toast = $("#toastInfo");
-
-				toast.modal('show');
-
-				const id = getFoodId(button);
-				toast.find("#infoTitle").text($("#text-" + id).text());
-				toast.find("#infoDescription").text($("#description-" + id).text());
-				toast.find("#infoFooter").html($("#cardFooter-" + id).html());
-
-				//Display image
-				//const imageSrc = $("#img-" + id).attr("src");
-				//toast.find("#infoImage").attr("src", imageSrc);
-				const imageElement = $("#img-" + id);
-				if (imageElement.length && imageElement.attr("src")) {
-					toast.find("#infoImage").attr("src", imageElement.attr("src")).show();
-					toast.find("#infoDescriptionContainer").attr("class", "col-8").show();
-					toast.find("#infoImageContainer").show(); // Hide the image element if no image is available
-				} else {
-					toast.find("#infoImage").hide(); // Hide the image element if no image is available
-					toast.find("#infoDescriptionContainer").attr("class", "col-12").show();
-					toast.find("#infoImageContainer").hide(); // Hide the image element if no image is available
-				}
-
-				//toast.find(".modal-body").text($("#text-" + id).text());
-
-			});
-		})
-
+		var deleteItemUrl = '@Url.Action("DeleteFromToast", "Food")';
 	</script>
+
+	<script src="~/js/deleteItem.js"></script>
+	<script src="~/js/itemInfo.js"></script>
 }
